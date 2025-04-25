@@ -299,6 +299,14 @@
     margin-left: 0.5rem !important;
   }
 }
+/* 防止文字被選中 */
+.user-select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
     </style>
 </head>
 <body class="bg-white">
@@ -1110,27 +1118,27 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
                     
                     return (
                         <button
-                            key={index}
-                            onClick={() => handleAnswerClick(option.value)}
-                            onTouchStart={() => handleTouchStart(option.value)}
-                            onTouchEnd={handleTouchEnd}
-                            onTouchCancel={handleTouchEnd}
-                            disabled={showFeedback}
-                            className={`
-                                w-full p-4 rounded-xl transition-all
-                                border flex items-center justify-between
-                                ${showFeedback && selectedAnswer === option.value
-                                    ? isCorrect
-                                        ? 'bg-teal-50 border-teal-300 text-teal-800' 
-                                        : 'bg-pink-50 border-pink-300 text-pink-800'
-                                    : isExcluded
-                                        ? 'bg-white border-slate-200 text-slate-400 opacity-80'
-                                        : selectedAnswer === option.value && !showFeedback
-                                            ? 'bg-slate-100 border-slate-300 text-slate-800'
-                                            : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
-                                }
-                                relative
-                            `}
+    key={index}
+    onClick={() => handleAnswerClick(option.value)}
+    onTouchStart={() => handleTouchStart(option.value)}
+    onTouchEnd={handleTouchEnd}
+    onTouchCancel={handleTouchEnd}
+    disabled={showFeedback}
+    className={`
+        w-full p-4 rounded-xl transition-all
+        border flex items-center justify-between user-select-none
+        ${showFeedback && selectedAnswer === option.value
+            ? isCorrect
+                ? 'bg-teal-50 border-teal-300 text-teal-800' 
+                : 'bg-pink-50 border-pink-300 text-pink-800'
+            : isExcluded
+                ? 'bg-white border-slate-200 text-slate-400 opacity-80'
+                : selectedAnswer === option.value && !showFeedback
+                    ? 'bg-slate-100 border-slate-300 text-slate-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
+        }
+        relative
+    `}
                         >
                             {/* 刪除線 */}
                             {isExcluded && (
