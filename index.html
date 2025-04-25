@@ -327,7 +327,14 @@
 .long-press-indicator {
   animation: pulse-border 1.5s infinite;
 }
-.excluded-option::before {
+
+/* 新增排除過程中的樣式類，用於觸發刪除線的動畫效果 */
+.excluding-option {
+  position: relative;
+  overflow: hidden;
+}
+
+.excluding-option::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -335,7 +342,24 @@
   right: 0;
   height: 2px;
   background-color: red;
-  animation: strikethrough 0.2s forwards;
+  width: 0;
+  animation: strikethrough 0.3s ease-out forwards;
+}
+
+/* 提示用戶長按的樣式 */
+.quiz-container .text-sm.text-zinc-500.mb-2.italic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background-color: rgba(255, 135, 176, 0.1);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-container .text-sm.text-zinc-500.mb-2.italic::before {
+  content: "👆";
+  margin-right: 0.5rem;
 }
     </style>
 </head>
@@ -1040,55 +1064,42 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
 };
 
     // 觸控事件處理函數
-   const handleTouchStart = (answer) => {
+  const handleTouchStart = (answer) => {
   if (showFeedback) return;
   
   // 獲取選項按鈕元素
   const optionButton = document.querySelector(`button[data-option="${answer}"]`);
   
   // 如果選項已被排除，我們將立即開始取消排除的處理
-  // 不再等待長按時間，這樣用戶可以立即看到反饋
   if (excludedAnswers.includes(answer)) {
-    if (optionButton) {
-      // 立即添加過渡類，表示正在取消排除
-      optionButton.classList.add('removing-exclusion');
-    }
-    
-    // 幾乎立即執行(20ms)，確保視覺效果能夠開始
-    const timeout = setTimeout(() => {
-      // 從排除列表中移除
-      setExcludedAnswers(prev => prev.filter(item => item !== answer));
-      if (optionButton) {
-        optionButton.classList.remove('removing-exclusion');
-      }
-    }, 20);
-    
-    setLongPressTimeout(timeout);
+    setExcludedAnswers(prev => prev.filter(item => item !== answer));
+    return;
   } 
-  // 如果選項未被排除，我們將添加長按指示效果
+  // 如果選項未被排除，設置長按計時器
   else {
     if (optionButton) {
       // 添加長按指示器樣式
       optionButton.classList.add('long-press-indicator');
     }
     
-    // 縮短長按時間到100ms，讓用戶體驗更加靈敏
+    // 設置長按計時器，時間縮短為300ms
     const timeout = setTimeout(() => {
-      // 一旦達到長按時間，立即添加排除效果
       if (optionButton) {
-        // 添加準備排除的類，這將觸發刪除線動畫
+        // 先添加動畫效果類
         optionButton.classList.add('excluding-option');
         
-        // 在極短的延遲後更新狀態，確保視覺效果先啟動
+        // 動畫開始後立即更新狀態，確保即使手指放開也會保持刪除狀態
+        setExcludedAnswers(prev => [...prev, answer]);
+        
+        // 移除長按指示器樣式
+        optionButton.classList.remove('long-press-indicator');
+        
+        // 延遲一下再移除動畫類，讓動畫有時間完成
         setTimeout(() => {
-          // 更新排除列表
-          setExcludedAnswers(prev => [...prev, answer]);
-          // 移除長按指示器樣式
-          optionButton.classList.remove('long-press-indicator');
           optionButton.classList.remove('excluding-option');
-        }, 10);
+        }, 300);
       }
-    }, 100);
+    }, 300); // 縮短時間到300ms
     
     setLongPressTimeout(timeout);
   }
@@ -1197,83 +1208,82 @@ const handleAnswerClick = (answer) => {
 
     // 修改後的選項渲染函數
     const renderQuestionOptions = (q) => {
+  return (
+    <div className="space-y-3">
+      {q.options.map((option, index) => {
+        const isExcluded = excludedAnswers.includes(option.value);
+        
         return (
-            <div className="space-y-3">
-                {q.options.map((option, index) => {
-                    const isExcluded = excludedAnswers.includes(option.value);
-                    
-                    return (
-                        <button
-    key={index}
-    data-option={option.value}  // 添加資料屬性以便在JS中找到元素
-    onClick={() => handleAnswerClick(option.value)}
-    onTouchStart={() => handleTouchStart(option.value)}
-    onTouchEnd={handleTouchEnd}
-    onTouchCancel={handleTouchEnd}
-    disabled={showFeedback}
-    className={`
-        w-full p-4 rounded-xl transition-all
-        border flex items-center justify-between user-select-none
-        ${showFeedback && selectedAnswer === option.value
-            ? isCorrect
-                ? 'bg-teal-50 border-teal-300 text-teal-800' 
-                : 'bg-pink-50 border-pink-300 text-pink-800'
-            : isExcluded
-                ? 'bg-white border-slate-200 text-slate-400 opacity-80'
-                : selectedAnswer === option.value && !showFeedback
+          <button
+            key={index}
+            data-option={option.value}
+            onClick={() => handleAnswerClick(option.value)}
+            onTouchStart={() => handleTouchStart(option.value)}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
+            disabled={showFeedback}
+            className={`
+              w-full p-4 rounded-xl transition-all
+              border flex items-center justify-between user-select-none
+              ${showFeedback && selectedAnswer === option.value
+                ? isCorrect
+                  ? 'bg-teal-50 border-teal-300 text-teal-800' 
+                  : 'bg-pink-50 border-pink-300 text-pink-800'
+                : isExcluded
+                  ? 'bg-white border-slate-200 text-slate-400 opacity-80'
+                  : selectedAnswer === option.value && !showFeedback
                     ? 'bg-slate-100 border-slate-300 text-slate-800'
                     : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
-        }
-        relative
-    `}
->
-    {/* 更生動的刪除線 */}
-    {isExcluded && (
-        <div className="absolute inset-0 flex items-center pointer-events-none z-20">
-            <div className="h-0.5 w-full bg-red-400 opacity-90 strike-animation"></div>
-        </div>
-    )}
-                            
-                            <div className="flex items-center relative z-10">
-                                <span className={`
-                                    flex-shrink-0 w-6 h-6 mr-3 rounded-full
-                                    flex items-center justify-center
-                                    ${showFeedback && selectedAnswer === option.value
-                                        ? isCorrect
-                                            ? 'bg-gradient-to-r from-emerald-400 to-green-500 text-white'
-                                            : 'bg-gradient-to-r from-pink-400 to-red-400 text-white'
-                                        : selectedAnswer === option.value && !showFeedback
-                                            ? 'bg-slate-300 text-white'
-                                            : 'border-2 border-slate-300'
-                                    }
-                                `}>
-                                    {showFeedback && selectedAnswer === option.value && (
-                                        isCorrect 
-                                            ? <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                                              </svg>
-                                            : <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                              </svg>
-                                    )}
-                                    {selectedAnswer === option.value && !showFeedback && (
-                                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                                    )}
-                                </span>
-                                {option.text && <span className={isExcluded ? 'line-through' : ''}>{option.text}</span>}
-                                {option.image && (
-                                    <div className={`quiz-option-image ml-2 ${isExcluded ? 'opacity-70' : ''}`}>
-                                        <img src={option.image} alt={`選項 ${option.value}`} className="h-8 object-contain" />
-                                    </div>
-                                )}
-                            </div>
-                        </button>
-                    );
-                })}
+              }
+              relative
+            `}
+          >
+            {/* 保留動畫效果的刪除線 */}
+            {isExcluded && (
+              <div className="absolute inset-0 flex items-center pointer-events-none z-20">
+                <div className="h-0.5 w-full bg-red-400 opacity-90 strike-animation"></div>
+              </div>
+            )}
+            
+            <div className="flex items-center relative z-10">
+              <span className={`
+                flex-shrink-0 w-6 h-6 mr-3 rounded-full
+                flex items-center justify-center
+                ${showFeedback && selectedAnswer === option.value
+                  ? isCorrect
+                    ? 'bg-gradient-to-r from-emerald-400 to-green-500 text-white'
+                    : 'bg-gradient-to-r from-pink-400 to-red-400 text-white'
+                  : selectedAnswer === option.value && !showFeedback
+                    ? 'bg-slate-300 text-white'
+                    : 'border-2 border-slate-300'
+                }
+              `}>
+                {showFeedback && selectedAnswer === option.value && (
+                  isCorrect 
+                    ? <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    : <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                )}
+                {selectedAnswer === option.value && !showFeedback && (
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                )}
+              </span>
+              {option.text && <span className={isExcluded ? 'line-through' : ''}>{option.text}</span>}
+              {option.image && (
+                <div className={`quiz-option-image ml-2 ${isExcluded ? 'opacity-70' : ''}`}>
+                  <img src={option.image} alt={`選項 ${option.value}`} className="h-8 object-contain" />
+                </div>
+              )}
             </div>
+          </button>
         );
-    };
-
+      })}
+    </div>
+  );
+};
     const q = currentQuestions[currentQuestion];
     if (!q) return <div>載入中...</div>;
 
