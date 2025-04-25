@@ -317,7 +317,7 @@
   animation: strikethrough 0.3s ease-out forwards;
 }
 
-/* 長按指示動畫 - 修改為更明顯的效果 */
+/* 長按指示動畫 */
 @keyframes pulse-border {
   0% { box-shadow: 0 0 0 0 rgba(255, 135, 176, 0.7); }
   70% { box-shadow: 0 0 0 8px rgba(255, 135, 176, 0); }
@@ -328,26 +328,8 @@
   animation: pulse-border 1s infinite;
 }
 
-/* 刪除線動畫效果 - 加快速度並增強可見性 */
-@keyframes strikethrough {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-/* 新增：排除過程中的類，確保動畫先發生 */
-.excluding-option::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: rgba(239, 68, 68, 0.9); /* 更明顯的紅色 */
-  animation: strikethrough 0.15s ease-out forwards;
-  z-index: 30;
-}
-
-/* 新增：取消排除過程中的類 */
+/* 補充刪除線效果的CSS，確保兩種方式都能工作 */
+.excluding-option::before,
 .removing-exclusion::before {
   content: "";
   position: absolute;
@@ -355,19 +337,22 @@
   left: 0;
   right: 0;
   height: 2px;
-  background-color: rgba(239, 68, 68, 0.5);
-  animation: strikethrough 0.15s ease-out reverse forwards;
   z-index: 30;
 }
 
-/* 觸摸反饋效果 */
-.touch-active {
-  transform: scale(0.98);
-  transition: transform 0.1s ease-out;
+.excluding-option::before {
+  background-color: rgba(239, 68, 68, 0.9); /* 更明顯的紅色 */
+  animation: strikethrough 0.15s ease-out forwards;
 }
 
-/* 已排除選項的樣式加強 */
-.excluded .option-text {
+.removing-exclusion::before {
+  background-color: rgba(239, 68, 68, 0.5);
+  animation: strikethrough 0.15s ease-out reverse forwards;
+}
+
+/* 確保排除選項的樣式得到應用 */
+.excluded .option-text,
+.excluded span:not(.flex-shrink-0) {
   text-decoration: line-through;
   color: #9ca3af;
 }
@@ -1084,52 +1069,42 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
   // 獲取選項按鈕元素
   const optionButton = document.querySelector(`button[data-option="${answer}"]`);
   
-  // 如果選項已被排除，我們將立即開始取消排除的處理
-  // 不再等待長按時間，這樣用戶可以立即看到反饋
-  if (excludedAnswers.includes(answer)) {
-    if (optionButton) {
-      // 立即添加過渡類，表示正在取消排除
-      optionButton.classList.add('removing-exclusion');
-    }
-    
-    // 幾乎立即執行(20ms)，確保視覺效果能夠開始
-    const timeout = setTimeout(() => {
-      // 從排除列表中移除
-      setExcludedAnswers(prev => prev.filter(item => item !== answer));
-      if (optionButton) {
-        optionButton.classList.remove('removing-exclusion');
-      }
-    }, 20);
-    
-    setLongPressTimeout(timeout);
-  } 
-  // 如果選項未被排除，我們將添加長按指示效果
-  else {
-    if (optionButton) {
-      // 添加長按指示器樣式
-      optionButton.classList.add('long-press-indicator');
-    }
-    
-    // 縮短長按時間到100ms，讓用戶體驗更加靈敏
-    const timeout = setTimeout(() => {
-      // 一旦達到長按時間，立即添加排除效果
-      if (optionButton) {
-        // 添加準備排除的類，這將觸發刪除線動畫
-        optionButton.classList.add('excluding-option');
-        
-        // 在極短的延遲後更新狀態，確保視覺效果先啟動
-        setTimeout(() => {
-          // 更新排除列表
-          setExcludedAnswers(prev => [...prev, answer]);
-          // 移除長按指示器樣式
-          optionButton.classList.remove('long-press-indicator');
-          optionButton.classList.remove('excluding-option');
-        }, 10);
-      }
-    }, 100);
-    
-    setLongPressTimeout(timeout);
+  // 添加長按指示器樣式
+  if (optionButton) {
+    optionButton.classList.add('long-press-indicator');
   }
+  
+  // 設置長按計時器 - 縮短為50ms以提高響應速度
+  const timeout = setTimeout(() => {
+    // 長按處理
+    if (excludedAnswers.includes(answer)) {
+      // 如果已經排除，則取消排除
+      setExcludedAnswers(excludedAnswers.filter(item => item !== answer));
+    } else {
+      // 否則添加到排除列表，並確保視覺效果立即顯示
+      // 先添加刪除線視覺效果類
+      if (optionButton) {
+        const strikeElement = optionButton.querySelector('.strike-animation');
+        if (strikeElement) {
+          // 重置動畫以便重新播放
+          strikeElement.style.animation = 'none';
+          setTimeout(() => {
+            strikeElement.style.animation = '';
+          }, 10);
+        }
+      }
+      
+      // 立即更新狀態
+      setExcludedAnswers([...excludedAnswers, answer]);
+    }
+    
+    // 移除長按指示器
+    if (optionButton) {
+      optionButton.classList.remove('long-press-indicator');
+    }
+  }, 50); // 50ms的長按時間
+  
+  setLongPressTimeout(timeout);
 };
 
 const handleTouchEnd = () => {
@@ -1139,22 +1114,19 @@ const handleTouchEnd = () => {
     setLongPressTimeout(null);
   }
   
-  // 移除所有選項的長按指示器和過渡類
-  document.querySelectorAll('.long-press-indicator, .excluding-option, .removing-exclusion').forEach(el => {
+  // 移除所有長按指示器
+  document.querySelectorAll('.long-press-indicator').forEach(el => {
     el.classList.remove('long-press-indicator');
-    el.classList.remove('excluding-option');
-    el.classList.remove('removing-exclusion');
   });
 };
 
-// 修改點擊處理函數，簡化邏輯
+// 點擊處理函數更新
 const handleAnswerClick = (answer) => {
   if (showFeedback) return;
   
-  // 選項已被排除的情況下，點擊會取消排除
+  // 如果選項已被排除，取消排除
   if (excludedAnswers.includes(answer)) {
-    // 立即從排除列表中移除
-    setExcludedAnswers(prev => prev.filter(item => item !== answer));
+    setExcludedAnswers(excludedAnswers.filter(item => item !== answer));
     return;
   }
   
@@ -1233,8 +1205,7 @@ const handleAnswerClick = (answer) => {
         }
     };
 
-    // 修改後的選項渲染函數
-    // 修改後的選項渲染函數
+   // 修改選項渲染函數，添加原有的刪除線效果
 const renderQuestionOptions = (q) => {
     return (
         <div className="space-y-3">
@@ -1266,7 +1237,13 @@ const renderQuestionOptions = (q) => {
                             relative
                         `}
                     >
-                        {/* 刪除線效果 - 現在依賴CSS類，不再使用獨立的div來實現 */}
+                        {/* 恢復原有的刪除線效果 */}
+                        {isExcluded && (
+                            <div className="absolute inset-0 flex items-center pointer-events-none z-20">
+                                <div className="h-0.5 w-full bg-red-400 opacity-90 strike-animation"></div>
+                            </div>
+                        )}
+                            
                         <div className="flex items-center relative z-10">
                             <span className={`
                                 flex-shrink-0 w-6 h-6 mr-3 rounded-full
@@ -1293,9 +1270,9 @@ const renderQuestionOptions = (q) => {
                                     <div className="w-2 h-2 bg-white rounded-full"></div>
                                 )}
                             </span>
-                            {option.text && <span className="option-text">{option.text}</span>}
+                            {option.text && <span className={isExcluded ? "line-through" : ""}>{option.text}</span>}
                             {option.image && (
-                                <div className={`quiz-option-image ml-2`}>
+                                <div className={`quiz-option-image ml-2 ${isExcluded ? 'opacity-70' : ''}`}>
                                     <img src={option.image} alt={`選項 ${option.value}`} className="h-8 object-contain" />
                                 </div>
                             )}
