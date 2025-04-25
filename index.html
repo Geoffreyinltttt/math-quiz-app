@@ -307,6 +307,26 @@
     user-select: none;
     -webkit-touch-callout: none;
 }
+/* 刪除線動畫效果 */
+@keyframes strikethrough {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.strike-animation {
+  animation: strikethrough 0.3s ease-out forwards;
+}
+
+/* 長按指示動畫 */
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 0 rgba(255, 135, 176, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 135, 176, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 135, 176, 0); }
+}
+
+.long-press-indicator {
+  animation: pulse-border 1.5s infinite;
+}
     </style>
 </head>
 <body class="bg-white">
@@ -805,7 +825,7 @@ const getUnitIcon = (title) => {
                                 </span>
                             )}
                             
-                            {/* 新的布局結構，確保一致的對齊 */}
+                            {/* 新的佈局結構，確保一致的對齊 */}
                             <div className="grid grid-cols-12 items-center gap-0 relative z-10">
                                 {/* 圖標區域，固定寬度 */}
                                 <div className="col-span-1">
@@ -1007,23 +1027,37 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
 
     // 觸控事件處理函數
     const handleTouchStart = (answer) => {
-        if (showFeedback) return;
-        
-        // 設置長按計時器
-        const timeout = setTimeout(() => {
-            handleLongPress(answer);
-        }, 300); // 300毫秒的長按閾值
-        
-        setLongPressTimeout(timeout);
-    };
+  if (showFeedback) return;
+  
+  // 添加長按指示器樣式
+  const optionButton = document.querySelector(`button[data-option="${answer}"]`);
+  if (optionButton) {
+    optionButton.classList.add('long-press-indicator');
+  }
+  
+  // 設置長按計時器
+  const timeout = setTimeout(() => {
+    // 移除長按指示器樣式
+    if (optionButton) {
+      optionButton.classList.remove('long-press-indicator');
+    }
+    handleLongPress(answer);
+  }, 500); // 增加到500毫秒，讓用戶有更多時間感知
+  
+  setLongPressTimeout(timeout);
+};
 
-    const handleTouchEnd = () => {
-        if (longPressTimeout) {
-            clearTimeout(longPressTimeout);
-            setLongPressTimeout(null);
-        }
-    };
-
+const handleTouchEnd = () => {
+  if (longPressTimeout) {
+    clearTimeout(longPressTimeout);
+    setLongPressTimeout(null);
+    
+    // 移除所有選項的長按指示器
+    document.querySelectorAll('.long-press-indicator').forEach(el => {
+      el.classList.remove('long-press-indicator');
+    });
+  }
+};
     // 修改後的點擊處理函數
     const handleAnswerClick = (answer) => {
         if (showFeedback) return;
@@ -1119,6 +1153,7 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
                     return (
                         <button
     key={index}
+    data-option={option.value}  // 添加資料屬性以便在JS中找到元素
     onClick={() => handleAnswerClick(option.value)}
     onTouchStart={() => handleTouchStart(option.value)}
     onTouchEnd={handleTouchEnd}
@@ -1139,13 +1174,13 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
         }
         relative
     `}
-                        >
-                            {/* 刪除線 */}
-                            {isExcluded && (
-                                <div className="absolute inset-0 flex items-center pointer-events-none">
-                                    <div className="h-0.5 w-full bg-red-400 opacity-80"></div>
-                                </div>
-                            )}
+>
+    {/* 更生動的刪除線 */}
+    {isExcluded && (
+        <div className="absolute inset-0 flex items-center pointer-events-none z-20">
+            <div className="h-0.5 w-full bg-red-400 opacity-90 strike-animation"></div>
+        </div>
+    )}
                             
                             <div className="flex items-center relative z-10">
                                 <span className={`
