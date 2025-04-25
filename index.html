@@ -327,6 +327,17 @@
 .long-press-indicator {
   animation: pulse-border 1.5s infinite;
 }
+/* 在CSS中添加變量來保存狀態 */
+.excluded-option::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: red;
+  animation: strikethrough 0.2s forwards;
+}
     </style>
 </head>
 <body class="bg-white">
@@ -1014,35 +1025,36 @@ function ResumePrompt({ topic, progress, onChoice, onBack }) {
 
     // 新增長按處理函數
     const handleLongPress = (answer) => {
-        if (showFeedback) return;
-        
-        // 如果選項已被排除，則取消排除
-        if (excludedAnswers.includes(answer)) {
-            setExcludedAnswers(excludedAnswers.filter(item => item !== answer));
-        } else {
-            // 否則將其添加到排除列表
-            setExcludedAnswers([...excludedAnswers, answer]);
-        }
-    };
+  if (showFeedback) return;
+  
+  const optionButton = document.querySelector(`button[data-option="${answer}"]`);
+  
+  // 如果選項已被排除，則取消排除
+  if (excludedAnswers.includes(answer)) {
+    setExcludedAnswers(excludedAnswers.filter(item => item !== answer));
+    if (optionButton) optionButton.classList.remove('excluded-option');
+  } else {
+    // 否則將其添加到排除列表
+    setExcludedAnswers([...excludedAnswers, answer]);
+    if (optionButton) optionButton.classList.add('excluded-option');
+  }
+};
 
     // 觸控事件處理函數
     const handleTouchStart = (answer) => {
   if (showFeedback) return;
   
-  // 添加長按指示器樣式
+  // 添加觸摸反饋樣式
   const optionButton = document.querySelector(`button[data-option="${answer}"]`);
   if (optionButton) {
+    optionButton.classList.add('touch-active');
     optionButton.classList.add('long-press-indicator');
   }
   
   // 設置長按計時器
   const timeout = setTimeout(() => {
-    // 移除長按指示器樣式
-    if (optionButton) {
-      optionButton.classList.remove('long-press-indicator');
-    }
     handleLongPress(answer);
-  }, 150); 
+  }, 80);
   
   setLongPressTimeout(timeout);
 };
@@ -1052,12 +1064,14 @@ const handleTouchEnd = () => {
     clearTimeout(longPressTimeout);
     setLongPressTimeout(null);
     
-    // 移除所有選項的長按指示器
-    document.querySelectorAll('.long-press-indicator').forEach(el => {
+    // 移除所有選項的觸摸反饋樣式
+    document.querySelectorAll('.touch-active').forEach(el => {
+      el.classList.remove('touch-active');
       el.classList.remove('long-press-indicator');
     });
   }
 };
+
     // 修改後的點擊處理函數
     const handleAnswerClick = (answer) => {
         if (showFeedback) return;
