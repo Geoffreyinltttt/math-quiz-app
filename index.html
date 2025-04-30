@@ -2,1676 +2,1601 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>普高數學你多會推廣樣課-3A</title>
-    
-    <!-- React 相關 CDN -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Hi, Civics 嗨！公民 - 113學年 No.13期</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-        
         * {
-            font-family: 'Noto Sans TC', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        
+
         body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(to bottom, #1a365d, #3182ce, #4299e1);
+            min-height: 100vh;
+            color: #2d3748;
         }
 
-        /* 數學你多會品牌色系 */
-        :root {
-          --brand-primary: #FF87B0;
-          --brand-secondary: #FFB347;
-          --brand-primary-light: rgba(255, 135, 176, 0.1);
-          --brand-secondary-light: rgba(255, 179, 71, 0.1);
-          --brand-gradient: linear-gradient(135deg, #FF87B0, #FFB347);
-          --brand-gradient-hover: linear-gradient(135deg, #FF77A0, #FFA337);
+        .header {
+            background: white;
+            padding: 12px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        /* 首頁卡片美化 */
-        .group:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 15px rgba(255, 135, 176, 0.15);
-          border-color: var(--brand-primary) !important;
-          transition: all 0.3s ease;
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 12px;
         }
 
-        /* 按鈕樣式替換 */
-        .bg-blue-500, .bg-green-500, .bg-yellow-500 {
-          background: var(--brand-gradient) !important;
-          border: none;
-          transition: all 0.3s ease;
+        .header-content-article {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
         }
 
-        .hover\:bg-blue-600:hover, 
-        .hover\:bg-green-600:hover, 
-        .hover\:bg-yellow-600:hover {
-          background: var(--brand-gradient-hover) !important;
-          transform: translateY(-2px);
+        .back-button {
+            background: none;
+            border: none;
+            color: #3182ce;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
-        /* 進度條樣式 */
-        .bg-zinc-700, .bg-blue-600 {
-          background: var(--brand-gradient) !important;
+        .title {
+            font-size: 20px;
+            margin: 0;
+            color: #2c3e50;
+            font-weight: bold;
         }
 
-        /* 答題反饋樣式 */
-        .bg-emerald-50, .bg-green-100 {
-          background-color: var(--brand-secondary-light) !important;
+        .issue-info {
+            font-size: 14px;
+            color: #64748b;
         }
 
-        .border-emerald-200, .border-green-200 {
-          border-color: var(--brand-secondary) !important;
+        .content-section {
+            padding: 0;
+            margin-bottom: 20px;
         }
 
-        .bg-red-50 {
-          background-color: var(--brand-primary-light) !important;
+        .section-title {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .border-red-200 {
-          border-color: var(--brand-primary) !important;
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+			margin-left: 16px;  /* 左邊距 */
+    		margin-right: 16px; /* 右邊距 */
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .bg-emerald-500 {
-          background-color: var(--brand-secondary) !important;
+        .article-image {
+    width: 100%;
+    height: 350px;  /* 增加高度 */
+    object-fit: cover;  /* 保持圖片比例，但確保完全覆蓋 */
+    object-position: center;  /* 圖片置中 */
+}
+
+        .article-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        .bg-red-500 {
-          background-color: var(--brand-primary) !important;
+        .tag-news {
+            background-color: #ebf8ff;
+            color: #3182ce;
         }
 
-        /* 解析框樣式 */
-        .bg-yellow-50 {
-          background-color: var(--brand-secondary-light) !important;
+        .tag-law {
+            background-color: #fef3c7;
+            color: #d97706;
         }
 
-        .border-yellow-200 {
-          border-color: var(--brand-secondary) !important;
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.4;
+            margin-bottom: 8px;
         }
-		/* 動畫效果 */
+
+        .card-excerpt {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .read-button {
+            background-color: #3182ce;
+            color: white;
+        }
+
+        .quiz-button {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        .podcast-card {
+            background: white;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s ease;
+        }
+		
+		.podcast-card:hover {
+    transform: translateY(-5px);  /* 輕微上移 */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);  /* 陰影變大 */
+}
+		
+		.podcast-card.expanded {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.podcast-player {
+    border-radius: 0 0 12px 12px;
+    margin-top: -8px; /* 加上 px */
+    margin-bottom: 16px;
+    background: linear-gradient(to bottom, #ffffff, #f0f7ff);
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+        .podcast-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .podcast-tag {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            background-color: #e6fffa;
+            color: #319795;
+            margin-bottom: 4px;
+        }
+
+        .play-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #3182ce, #63b3ed);
+            box-shadow: 0 2px 6px rgba(49, 130, 206, 0.5);
+            color: white;
+        }
+
+        .play-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer {
+            background-color: #1a365d;
+            color: white;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .article-footer {
+            background-color: white;
+            color: #4a5568;
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* 貼心提示打開方式 */
+        .tip-banner {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #2c5282;
+        }
+
+        /* 文章頁面相關樣式 */
+        .article-container {
+            background: white;
+            border-radius: 12px;
+            margin: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .article-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .article-title {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .article-content {
+            padding: 16px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .article-content p {
+            margin-bottom: 16px;
+        }
+
+        .article-content img {
+    width: 100%;
+    height: auto;  /* 保持原始寬高比 */
+    max-width: 800px;  /* 設定最大寬度 */
+    max-height: 600px;  /* 設定最大高度 */
+    object-fit: contain;  /* 保持原始比例 */
+    margin: 16px auto;  /* 水平居中 */
+    display: block;  /* 確保可以水平居中 */
+}
+        .audio-player {
+            background: rgba(49, 130, 206, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .audio-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c5282;
+        }
+
+        audio {
+            width: 100%;
+        }
+
+        .quiz-section {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .quiz-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2d3748;
+        }
+
+        /* 自定義音頻播放器樣式 */
+        .custom-audio::-webkit-media-controls-panel {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .custom-audio::-webkit-media-controls-play-button,
+        .custom-audio::-webkit-media-controls-volume-slider,
+        .custom-audio::-webkit-media-controls-mute-button,
+        .custom-audio::-webkit-media-controls-timeline {
+            filter: invert(1);
+        }
+
+        /* 為主頁容器添加ID */
+        #main-page {
+            display: block;
+        }
+
+        #article-page {
+            display: none;
+        }
+
+        /* 添加切換動畫 */
+        .page-transition {
+            transition: all 0.3s ease-in-out;
+        }
+		.article-card {
+    transition: all 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+/* 答案標記樣式 */
+.answer-indicator {
+    animation: fadeIn 0.5s;
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* 為每個單元項添加交錯出現的動畫 */
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.grid button:nth-child(1) { animation: slideIn 0.3s ease-out 0.1s both; }
-.grid button:nth-child(2) { animation: slideIn 0.3s ease-out 0.15s both; }
-.grid button:nth-child(3) { animation: slideIn 0.3s ease-out 0.2s both; }
-.grid button:nth-child(4) { animation: slideIn 0.3s ease-out 0.25s both; }
-.grid button:nth-child(5) { animation: slideIn 0.3s ease-out 0.3s both; }
-.grid button:nth-child(6) { animation: slideIn 0.3s ease-out 0.35s both; }
-.grid button:nth-child(7) { animation: slideIn 0.3s ease-out 0.4s both; }
-.grid button:nth-child(8) { animation: slideIn 0.3s ease-out 0.45s both; }
-.grid button:nth-child(9) { animation: slideIn 0.3s ease-out 0.5s both; }
-.grid button:nth-child(10) { animation: slideIn 0.3s ease-out 0.55s both; }
-.grid button:nth-child(11) { animation: slideIn 0.3s ease-out 0.6s both; }
-
-/* 進度條動畫 */
-@keyframes progressFill {
-  from { width: 0; }
-  to { width: var(--progress-width); }
-}
-
-.grid button .bg-gradient-to-r {
-  animation: progressFill 1s ease-out 0.7s forwards;
-}
-@keyframes pulse {
-    0% {
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.8;
-    }
-}
-
-.animate-pulse {
-    animation: pulse 2s infinite;
-}
-
-/* 已經添加的鎖定樣式*/
-.cursor-not-allowed {
+/* 禁用按鈕樣式 */
+button:disabled {
+    opacity: 0.7;
     cursor: not-allowed;
 }
-
-.filter.grayscale {
-    filter: grayscale(100%);
+#article-page {
+    min-height: 100vh; /* 至少佔滿整個視窗高度 */
+    display: flex;
+    flex-direction: column;
 }
 
-.quiz-container {
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(255, 240, 245, 0.6));
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 135, 176, 0.1);
+.article-container {
+    flex: 1; /* 讓文章容器佔據剩餘的空間 */
 }
 
-.quiz-question-image {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 135, 176, 0.2);
-  padding: 8px;
-  background-color: #FDFDFD;
-  margin-bottom: 16px;
-}
-
-/* 解析圖片美化 */
-.quiz-explanation-image {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 179, 71, 0.2);
-  padding: 8px;
-  background-color: #FDFDFD;
-}
-
-/* 手機螢幕適應樣式 */
-@media (max-width: 640px) {
-  /* 整體間距調整 */
-  .p-8 {
-    padding: 1rem !important;
-  }
-  
-  .p-6 {
-    padding: 0.75rem !important;
-  }
-  
-  /* 字體大小調整 */
-  .text-3xl {
-    font-size: 1.5rem !important;
-  }
-  
-  .text-2xl {
-    font-size: 1.25rem !important;
-  }
-  
-  .text-xl {
-    font-size: 1.125rem !important;
-  }
-  
-  /* 元素大小調整 */
-  .w-12 {
-    width: 2.5rem !important;
-  }
-  
-  .h-12 {
-    height: 2.5rem !important;
-  }
-  
-  .w-10 {
-    width: 2rem !important;
-  }
-  
-  .h-10 {
-    height: 2rem !important;
-  }
-  
-  /* 按鈕元素調整 */
-  .rounded-3xl {
-    border-radius: 1rem !important;
-  }
-  
-  .rounded-2xl {
-    border-radius: 0.75rem !important;
-  }
-  
-  /* 間距調整 */
-  .space-x-4 > * + * {
-    margin-left: 0.75rem !important;
-  }
-  
-  .mb-10 {
-    margin-bottom: 1.5rem !important;
-  }
-  
-  /* 頭像區域調整 */
-  header img {
-    height: 3.5rem !important;
-  }
-  
-  /* 單元選擇頁面調整 */
-  .grid.gap-4 {
-    gap: 0.5rem !important;
-  }
-  
-  /* 進度條寬度調整 */
-  .w-20 {
-    width: 3rem !important;
-  }
-}
-
-/* 極小螢幕適應樣式 */
-@media (max-width: 360px) {
-  /* 更緊湊的佈局 */
-  .p-5 {
-    padding: 0.5rem !important;
-  }
-  
-  /* 更小的字體 */
-  .text-lg {
-    font-size: 1rem !important;
-  }
-  
-  .text-sm {
-    font-size: 0.75rem !important;
-  }
-  
-  /* 更小的圖標 */
-  .w-6, .h-6 {
-    width: 1.25rem !important;
-    height: 1.25rem !important;
-  }
-  
-  .w-5, .h-5 {
-    width: 1rem !important;
-    height: 1rem !important;
-  }
-  
-  /* 減少間距 */
-  .space-x-6 > * + * {
-    margin-left: 0.5rem !important;
-  }
-  
-  .space-x-4 > * + * {
-    margin-left: 0.5rem !important;
-  }
-}
-/* 防止文字被選中 */
-.user-select-none {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-}
-/* 刪除線動畫效果 */
-@keyframes strikethrough {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-.strike-animation {
-  animation: strikethrough 0.3s ease-out forwards;
-}
-
-/* 長按指示動畫 */
-@keyframes pulse-border {
-  0% { box-shadow: 0 0 0 0 rgba(255, 135, 176, 0.4); }
-  70% { box-shadow: 0 0 0 6px rgba(255, 135, 176, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 135, 176, 0); }
-}
-
-.long-press-indicator {
-  animation: pulse-border 1.5s infinite;
-}
-
-/* 新增排除過程中的樣式類，用於觸發刪除線的動畫效果 */
-.excluding-option {
-  position: relative;
-  overflow: hidden;
-}
-
-.excluding-option::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: red;
-  width: 0;
-  animation: strikethrough 0.3s ease-out forwards;
-}
-
-/* 提示用戶長按的樣式 */
-.quiz-container .text-sm.text-zinc-500.mb-2.italic {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  background-color: rgba(255, 135, 176, 0.1);
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.quiz-container .text-sm.text-zinc-500.mb-2.italic::before {
-  content: "👆";
-  margin-right: 0.5rem;
+.article-footer {
+    margin-top: auto; /* 確保頁尾始終在底部 */
 }
     </style>
 </head>
-<body class="bg-white">
-    <div id="app"></div>
-
-    <script type="text/babel">
-    // 單元列表
-    const topics = [
-        "單元01 弧度量",
-        "單元02 三角函數的圖形",
-        "單元03 三角的和差角公式",
-        "單元04 正餘弦的疊合",
-        "單元05 指數函數",
-        "單元06 對數與對數律",
-        "單元07 對數函數",
-        "單元08 平面向量",
-        "單元09 平面向量的運算",
-        "單元10 二元一次聯立方程式"
-    ];
-
-        // 題目資料
-const unitQuestions = {
-    "單元01 弧度量": [
-        {
-            id: "1-1",
-            questionImage: "https://hackmd.io/_uploads/rJPu0j2qJe.png",
-            options: [
-                { text: "O", value: "O" },
-                { text: "X", value: "X" }
-            ],
-            correctAnswer: "X",
-            explanationImage: "https://hackmd.io/_uploads/rJFIvn3qyx.png"
-        },
-        {
-            id: "1-2",
-            questionImage: "https://hackmd.io/_uploads/rkkhX2n5ke.png",
-            options: [
-                { text: "O", value: "O" },
-                { text: "X", value: "X" }
-            ],
-            correctAnswer: "O",
-            explanationImage: null
-        },
-        {
-            id: "1-3",
-            questionImage: "https://hackmd.io/_uploads/rJWNmNks1x.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/rkyrE4ks1x.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/B19_EEkj1l.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/S1HKVNJoyx.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/Bklc44Jiyx.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/SkYcV4ks1g.png", value: "E" }
-            ],
-            correctAnswer: "D",
-            explanationImage: "https://hackmd.io/_uploads/S12sEVkoJl.png"
-        },
-        {
-            id: "1-4",
-            questionImage: "https://hackmd.io/_uploads/B1hAVVyoyl.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/BJXmBVJs1l.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HJmNBV1skg.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/r1RNrEkj1l.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/Hyj8r4yo1g.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/BkIwrEJoJx.png", value: "E" }
-            ],
-            correctAnswer: "B",
-            explanationImage: "https://hackmd.io/_uploads/HJ8y8VkjJe.png"
-        },
-        {
-            id: "1-5",
-            questionImage: "https://hackmd.io/_uploads/rJ9Z8N1jke.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/SkrmIE1i1g.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/H1lV8Nysye.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/rJ2SIN1o1e.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/HJvUL4yo1l.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/HJnw84JoJe.png", value: "E" }
-            ],
-            correctAnswer: "E",
-            explanationImage: "https://hackmd.io/_uploads/rJlqUEkokx.png"
-        },
-        {
-            id: "1-6",
-            questionImage: "https://hackmd.io/_uploads/rJi6LEkjkg.png",
-            options: [
-                { text: "O", value: "O" },
-                { text: "X", value: "X" }
-            ],
-            correctAnswer: "O",
-            explanationImage: "https://hackmd.io/_uploads/SJZ1PV1ike.png"
-        },
-        {
-            id: "1-7",
-            questionImage: "https://hackmd.io/_uploads/B1MxDV1i1x.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/B1JZvEyskx.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HJ5ZwVJskl.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/BkzfP4ysJg.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/HJ2zDN1jyl.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/r147DN1okx.png", value: "E" }
-            ],
-            correctAnswer: "D",
-            explanationImage: "https://hackmd.io/_uploads/H1R4wE1jkg.png"
-        },
-        {
-            id: "1-8",
-            questionImage: "https://hackmd.io/_uploads/Sy3ivN1iyx.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/By90FEkoyl.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HJVycNkj1g.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/H1g-5NJiyl.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/ry7MqNkjJe.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/HyeQ5V1syl.png", value: "E" }
-            ],
-            correctAnswer: "E",
-            explanationImage: "https://hackmd.io/_uploads/rJUV541oye.png"
-        },
-        {
-            id: "1-9",
-            questionImage: "https://hackmd.io/_uploads/HyX26VJi1e.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/rJs6aEkoyl.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/BJERaVkskx.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/B1gJCVyiJe.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/B1cy0EJiyl.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/SkBgAE1iyx.png", value: "E" }
-            ],
-            correctAnswer: "D",
-            explanationImage: "https://hackmd.io/_uploads/rkp-CVkjye.png"
-        },
-        {
-            id: "1-10",
-            questionImage: "https://hackmd.io/_uploads/rJ2Q04yiJl.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/ry8SA4ksJg.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HJfURNJjke.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/r1jIR4JjJg.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/SkMwREkoJx.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/rk5wAEyoye.png", value: "E" }
-            ],
-            correctAnswer: "C",
-            explanationImage: "https://hackmd.io/_uploads/rkE9R4yikx.png"
-        },
-        {
-            id: "1-11",
-            questionImage: "https://hackmd.io/_uploads/Hy9nC41skl.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/rksTRN1ikl.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HyQR0EJske.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/SJp0REyjJl.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/BJPykHks1e.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/HyggkS1j1x.png", value: "E" }
-            ],
-            correctAnswer: "E",
-            explanationImage: "https://hackmd.io/_uploads/HJt8kS1oJl.png"
-        },
-        {
-            id: "1-12",
-            questionImage: "https://hackmd.io/_uploads/r1TjkHyjke.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/SJc-xSJskg.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HJmzeSkiJl.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/Hk6zxBysye.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/B1HQgBys1x.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/r12XlHyikx.png", value: "E" }
-            ],
-            correctAnswer: "D",
-            explanationImage: "https://hackmd.io/_uploads/H1fwlHJsJl.png"
-        },
-        {
-            id: "1-13",
-            questionImage: "https://hackmd.io/_uploads/S1dFxryo1g.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/B1LjlSyoyl.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/SJkhgSki1l.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/SkBngSkjkg.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/Sy1Tgryokl.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/HkdagBkikg.png", value: "E" }
-            ],
-            correctAnswer: "B",
-            explanationImage: "https://hackmd.io/_uploads/r1qyMrJoye.png"
-        },
-        {
-            id: "1-14",
-            questionImage: "https://hackmd.io/_uploads/BkXWzryike.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/BJYhMSJskg.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/HJFAGHksyl.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/BkGkQBko1x.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/H1JZQSyoye.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/SkemXrJjkg.png", value: "E" }
-            ],
-            correctAnswer: "C",
-            explanationImage: "https://hackmd.io/_uploads/BJmVQHJikx.png"
-        },
-        {
-            id: "1-15",
-            questionImage: "https://hackmd.io/_uploads/Hy-IQr1oyx.png",
-            options: [
-                { image: "https://hackmd.io/_uploads/SkjLmSJskx.png", value: "A" },
-                { image: "https://hackmd.io/_uploads/H1XOQSkiyx.png", value: "B" },
-                { image: "https://hackmd.io/_uploads/r15qmrJsye.png", value: "C" },
-                { image: "https://hackmd.io/_uploads/BytomSJjJe.png", value: "D" },
-                { image: "https://hackmd.io/_uploads/B1W3XHkoyl.png", value: "E" }
-            ],
-            correctAnswer: "B",
-            explanationImage: "https://hackmd.io/_uploads/BJv0QBJjyx.png"
-        }
-    ]
-};
-
-
-        // 進度管理工具
-const ProgressManager = {
-    getProgress: () => {
-        try {
-            const progress = localStorage.getItem('mathQuizProgress');
-            return progress ? JSON.parse(progress) : {};
-        } catch (error) {
-            console.error('Error reading progress:', error);
-            return {};
-        }
-    },
+<body class="bg-gradient-to-b from-blue-900 via-blue-600 to-blue-400">
+    <!-- 主頁內容 -->
+    <div id="main-page" class="page-transition">
+        <!-- 頁頭 -->
+        <div class="header">
+            <div class="header-content">
+                <div class="text-center">
+                    <h1 class="title">Hi, Civics 嗨！公民</h1>
+                    <div class="issue-info">113學年 No.13期</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主要內容 -->
+        <div class="container mx-auto px-4 py-4">
+            
+            
+            <!-- Podcast 部分 -->
+<div class="content-section">
+    <h2 class="section-title">本期 Podcast</h2>
     
-    setProgress: (topic, round) => {
-        try {
-            const currentProgress = ProgressManager.getProgress();
-            const newProgress = {
-                ...currentProgress,
-                [topic]: Math.max(round, currentProgress[topic] || 0)
-            };
-            localStorage.setItem('mathQuizProgress', JSON.stringify(newProgress));
-            return newProgress;
-        } catch (error) {
-            console.error('Error saving progress:', error);
-            return {};
-        }
-    },
-    
-    resetProgress: (topic) => {
-        try {
-            const currentProgress = ProgressManager.getProgress();
-            const newProgress = {
-                ...currentProgress,
-                [topic]: 0
-            };
-            localStorage.setItem('mathQuizProgress', JSON.stringify(newProgress));
-            return newProgress;
-        } catch (error) {
-            console.error('Error resetting progress:', error);
-            return {};
-        }
-    }
-};
-
-// HomePage 組件
-function HomePage({ onStartQuiz }) {
-    return (
-        <div className="p-8 max-w-2xl mx-auto">
-            <div className="space-y-6">
-                {/* 刷題小高手按鈕 */}
-                <button 
-                    onClick={() => onStartQuiz('刷題救數學')} 
-                    className="w-full group bg-white p-6 rounded-3xl border border-zinc-100 hover:border-zinc-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                >
-                    <div className="flex items-center space-x-4">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-pink-300 to-amber-300 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                        </div>
-                        <div className="flex-1">
-                            <h3 className="text-2xl text-zinc-800 mb-1 font-normal text-left">刷題小高手</h3>
-                            <p className="text-zinc-500 text-left">透過解題培養數學思維能力</p>
-                        </div>
-                        <div className="text-zinc-300 group-hover:text-pink-400 transition-colors">
-                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </div>
-                    </div>
+   <!-- Podcast 卡片 1 -->
+   <div class="podcast-card flex p-3 cursor-pointer" data-podcast-id="ep13">
+        <img src="https://hackmd.io/_uploads/HJm_Ffyxel.jpg" alt="Podcast 封面" class="podcast-image rounded-lg mr-3">
+        <div class="flex-grow">
+            <span class="podcast-tag">嗨！公民電台</span>
+            <h3 class="card-title text-base">EP13: 從韓國戒嚴到台灣民主發展之路</h3>
+            <div class="flex items-center justify-between mt-2">
+                <div class="text-sm text-gray-500">00:00</div>
+                <button class="play-btn-icon mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
                 </button>
-                
-                {/* 雲端教室按鈕 */}
-                <a 
-                    href=" https://sites.google.com/view/62003-111/%E9%A6%96%E9%A0%81" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="w-full group bg-white p-6 rounded-3xl border border-zinc-100 hover:border-zinc-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block"
-                >
-                    <div className="flex items-center space-x-4">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-pink-300 to-amber-300 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <div className="flex-1">
-                            <h3 className="text-2xl text-zinc-800 mb-1 font-normal text-left">雲端教室</h3>
-                            <p className="text-zinc-500 text-left">觀看教科書影音解題掌握關鍵概念</p>
-                        </div>
-                        <div className="text-zinc-300 group-hover:text-pink-400 transition-colors">
-                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                        </div>
-                    </div>
-                </a>
-
-                {/* 學測數學公式隨身讀按鈕 */}
-                <a 
-                    href="https://sites.google.com/view/math-card-lt/%E9%A6%96%E9%A0%81" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="w-full group bg-white p-6 rounded-3xl border border-zinc-100 hover:border-zinc-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block"
-                >
-                    <div className="flex items-center space-x-4">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-pink-300 to-amber-300 flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                        </div>
-                        <div className="flex-1">
-                            <h3 className="text-2xl text-zinc-800 mb-1 font-normal text-left">學測數學公式隨身讀</h3>
-                            <p className="text-zinc-500 text-left">學測必備的數學公式一把罩</p>
-                        </div>
-                        <div className="text-zinc-300 group-hover:text-pink-400 transition-colors">
-                            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
-    );
-}
-
-
-function TopicSelection({ onSelectTopic, onBack, topicProgress }) {
-    // 為每個單元分配獨特的背景顏色
-    const getUnitColors = (index) => {
-        const colors = [
-            { light: 'from-pink-50 to-amber-50', icon: 'from-pink-300 to-amber-300' },
-            { light: 'from-rose-50 to-orange-50', icon: 'from-rose-300 to-orange-300' },
-            { light: 'from-fuchsia-50 to-yellow-50', icon: 'from-fuchsia-300 to-yellow-300' },
-            { light: 'from-purple-50 to-amber-50', icon: 'from-purple-300 to-amber-300' },
-            { light: 'from-violet-50 to-orange-50', icon: 'from-violet-300 to-orange-300' },
-            { light: 'from-indigo-50 to-yellow-50', icon: 'from-indigo-300 to-yellow-300' },
-            { light: 'from-blue-50 to-pink-50', icon: 'from-blue-300 to-pink-300' },
-            { light: 'from-sky-50 to-rose-50', icon: 'from-sky-300 to-rose-300' },
-            { light: 'from-cyan-50 to-fuchsia-50', icon: 'from-cyan-300 to-fuchsia-300' },
-            { light: 'from-teal-50 to-purple-50', icon: 'from-teal-300 to-purple-300' },
-            { light: 'from-emerald-50 to-violet-50', icon: 'from-emerald-300 to-violet-300' }
-        ];
-        return colors[index % colors.length];
-    };
-    
-    // 根據單元名稱選擇更貼切的數學圖標
-const getUnitIcon = (title) => {
-    const icons = {
-        '單元01 弧度量': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 弧度量符號 - 圓弧和角度 */}
-                <circle cx="12" cy="12" r="7" strokeWidth="2" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v7l5 5" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 12l-3 3" strokeDasharray="3 2" />
-            </svg>
-        ),
-        '單元02 三角函數的圖形': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 三角函數正弦曲線 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12h16" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 18c2-6 4-6 6 0s4 6 6 0 4-6 6 0" />
-            </svg>
-        ),
-        '單元03 三角的和差角公式': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 和差角公式符號 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h6M8 9v6M15 9h4M15 15h4M15 12h4" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 17l8-10" strokeDasharray="1 1" />
-            </svg>
-        ),
-        '單元04 正餘弦的疊合': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 正餘弦疊合波形 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12h16" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 9c2 6 4 6 6 0s4-6 6 0 4 6 6 0" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 15c2-6 4-6 6 0s4 6 6 0 4-6 6 0" stroke="#6b7280" />
-            </svg>
-        ),
-        '單元05 指數函數': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 指數函數曲線 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 20h16M4 20v-8" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16c1 0 2-1 3-2s2-3 3-4 2-3 3-4 2-2 3-2 2 0 4 0" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h1M7 8v1" strokeDasharray="1" />
-            </svg>
-        ),
-        '單元06 對數與對數律': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 對數符號 log */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 6h3M8 12h3M8 18h3M6 6v12M14 9l2-3" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 18h4M17 14v4" />
-            </svg>
-        ),
-        '單元07 對數函數': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 對數函數曲線 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12h16M12 4v16" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12c-6-5-10-6-12-6s-3 1-4 6" />
-            </svg>
-        ),
-        '單元08 平面向量': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 平面向量符號 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12h16M12 4v16" strokeDasharray="1 2" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 6l10 10" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 16l-2 2M16 16l2 0M16 16l0 2" />
-            </svg>
-        ),
-        '單元09 平面向量的運算': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 向量運算 - 和與差 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 10l6-4" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 14l6 4" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 10l-6-4" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 14l-6 4" />
-                <circle cx="6" cy="12" r="2" strokeWidth="2" />
-                <circle cx="18" cy="12" r="2" strokeWidth="2" />
-                <circle cx="12" cy="6" r="2" strokeWidth="2" />
-                <circle cx="12" cy="18" r="2" strokeWidth="2" />
-            </svg>
-        ),
-        '單元10 二元一次聯立方程式': (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {/* 聯立方程式 - 兩直線相交 */}
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 20L20 4" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4l16 16" />
-                <circle cx="12" cy="12" r="1.5" strokeWidth="2" fill="currentColor" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M6 8h2M8 6v2M16 18h2M18 16v2" strokeDasharray="1" />
-            </svg>
-        )
-    };
-        
-        // 找出最匹配的圖標
-        for (const key in icons) {
-            if (title.includes(key)) {
-                return icons[key];
-            }
-        }
-        
-        // 如果找不到對應的圖標，使用數學符號的圖標
-        return (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m-8-8h16M9 9l6 6M15 9l-6 6" />
-            </svg>
-        );
-    };
-
-    return (
-        <div className="p-6 md:p-8 max-w-3xl mx-auto animate-fadeIn">
-            <div className="mb-10 text-center md:text-left">
-                <h2 className="text-3xl text-zinc-800 mb-3 font-light">單元選擇</h2>
-                <p className="text-zinc-500">選擇想要練習的數學主題開始學習</p>
-            </div>
-            
-            <div className="grid gap-4 mb-8">
-                {topics.map((topic, index) => {
-                    const progress = topicProgress[topic] || 0;
-                    const unit = topic.match(/單元\d+/)[0];
-                    const title = topic.replace(/單元\d+\s/, '');
-                    const colors = getUnitColors(index);
-                    const unitIcon = getUnitIcon(title);
-                    
-                    // 設定鎖定狀態 - 只有單元01是未鎖定的
-                    const isLocked = !topic.includes("單元01");
-                    
-                    return (
-                        <button
-                            key={index}
-                            onClick={isLocked ? undefined : () => onSelectTopic(topic)}
-                            className={`
-                                group bg-white p-5 rounded-2xl border border-zinc-100 
-                                ${isLocked ? 'cursor-not-allowed' : 'hover:border-zinc-200 hover:shadow-xl transform hover:-translate-y-1'}
-                                transition-all duration-300 w-full overflow-hidden relative
-                                ${progress > 0 ? 'bg-gradient-to-r ' + colors.light : ''}
-                                ${isLocked ? 'opacity-70' : ''}
-                                relative
-                            `}
-                        >
-                            {/* 鎖定圖標 */}
-                            {isLocked && (
-                                <span className="absolute top-1/2 right-6 transform -translate-y-1/2 text-2xl z-20 text-zinc-600 animate-pulse">
-                                    🔒
-                                </span>
-                            )}
-                            
-                            {/* 新的佈局結構，確保一致的對齊 */}
-                            <div className="grid grid-cols-12 items-center gap-0 relative z-10">
-                                {/* 圖標區域，固定寬度 */}
-                                <div className="col-span-1">
-                                    <div className={`
-                                        flex-shrink-0 w-10 h-10 rounded-xl 
-                                        bg-gradient-to-br ${colors.icon}
-                                        flex items-center justify-center text-white
-                                        shadow-md ${isLocked ? 'filter grayscale' : 'group-hover:shadow-lg'} 
-                                        transition-all duration-300
-                                    `}>
-                                        {unitIcon}
-                                    </div>
-                                </div>
-                                
-                                {/* 單元編號與主題文字，固定對齊 */}
-                                <div className="col-span-7 pl-2">
-                                    <div className="flex flex-col items-start">
-                                        <span className="text-xs font-medium text-zinc-400 block">{unit}</span>
-                                        <span className="text-zinc-700 text-lg block">{title}</span>
-                                    </div>
-                                </div>
-                                
-                                {/* 進度與箭頭區域，固定對齊 */}
-                                <div className="col-span-4 flex items-center justify-end">
-                                    {progress > 0 && (
-                                        <div className="flex items-center mr-3">
-                                            <div className="bg-white/50 rounded-full h-1.5 w-16 overflow-hidden shadow-inner">
-                                                <div 
-                                                    className={`
-                                                        bg-gradient-to-r ${colors.icon} h-1.5 rounded-full 
-                                                        transition-all duration-500 ease-out shadow
-                                                    `}
-                                                    style={{width: `${(progress/3)*100}%`}}
-                                                ></div>
-                                            </div>
-                                            <span className="text-sm font-medium text-zinc-600 text-center ml-2 w-8">
-                                                {progress === 3 ? (
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-pink-300 to-amber-300 text-white">
-                                                        完成
-                                                    </span>
-                                                ) : `${progress}/3`}
-                                            </span>
-                                        </div>
-                                    )}
-                                    <div className="text-zinc-400 group-hover:text-pink-500 transition-colors">
-                                        <svg className={`w-6 h-6 transform ${isLocked ? '' : 'group-hover:translate-x-1'} transition-transform duration-300`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* 裝飾性背景元素 */}
-                            <div className="absolute -right-12 -bottom-12 w-40 h-40 rounded-full bg-gradient-to-br from-transparent to-white/10 pointer-events-none"></div>
-                            <div className="absolute -left-12 -top-12 w-32 h-32 rounded-full bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
-                            
-                            {/* 懸停時顯示的提示 */}
-                            {isLocked && (
-                                <div className="absolute inset-0 flex items-center justify-center opacity-0 bg-black/70 group-hover:opacity-100 transition-opacity duration-300 z-10 rounded-2xl">
-                                    <p className="text-white font-medium">課程尚未開放</p>
-                                </div>
-                            )}
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    );
-}
-
-		// ResumePrompt 組件
-function ResumePrompt({ topic, progress, onChoice, onBack }) {
-    return (
-        <div className="p-4 max-w-md mx-auto">
-            <h2 className="text-xl font-bold mb-4 text-center">
-                {topic}
-            </h2>
-            <div className="bg-blue-100 border-l-4 border-blue-500 p-4 mb-6">
-                <p className="text-blue-700">
-                    您已經完成了 {progress} 回合的練習！是否要繼續？
-                </p>
-            </div>
-            <p className="text-lg mb-6 text-center">
-                請選擇您要如何繼續：
-            </p>
-            <button 
-                onClick={() => onChoice('continue')}
-                className="w-full mb-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-                繼續下一回合
-            </button>
-            <button 
-                onClick={() => onChoice('restart')}
-                className="w-full mb-3 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
-            >
-                重新開始此單元
-            </button>
-            <button 
-                onClick={onBack}
-                className="w-full py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-            >
-                返回單元選擇
-            </button>
-        </div>
-    );
-}
-	
-        // ReviewPrompt 組件
-        function ReviewPrompt({ topic, onChoice, onBack }) {
-            return (
-                <div className="p-4 max-w-md mx-auto">
-                    <h2 className="text-xl font-bold mb-4 text-center">
-                        {topic}
-                    </h2>
-                    <div className="bg-green-100 border-l-4 border-green-500 p-4 mb-6">
-                        <p className="text-green-700">
-                            恭喜！您已經完成了這個單元的所有練習！
-                        </p>
-                    </div>
-                    <p className="text-lg mb-6 text-center">
-                        需要重新複習一次嗎？
-                    </p>
-                    <button 
-                        onClick={() => onChoice('restart')}
-                        className="w-full mb-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                    >
-                        重新開始練習
-                    </button>
-                    <button 
-                        onClick={onBack}
-                        className="w-full py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-                    >
-                        返回單元選擇
-                    </button>
-                </div>
-            );
-        }
-
-        // Quiz 組件
-       function Quiz({ topic, onFinish, initialRound, onUpdateProgress }) {
-    const [allQuestions, setAllQuestions] = React.useState([]);
-    const [currentQuestions, setCurrentQuestions] = React.useState([]);
-    const [currentQuestion, setCurrentQuestion] = React.useState(0);
-    const [selectedAnswer, setSelectedAnswer] = React.useState(null);
-    const [showFeedback, setShowFeedback] = React.useState(false);
-    const [isCorrect, setIsCorrect] = React.useState(false);
-    const [quizComplete, setQuizComplete] = React.useState(false);
-    const [wrongQuestions, setWrongQuestions] = React.useState([]);
-    const [correctAnswers, setCorrectAnswers] = React.useState(0);
-    const [round, setRound] = React.useState(initialRound);
-    const [showExplanation, setShowExplanation] = React.useState(false);
-    const [isReviewingWrongQuestions, setIsReviewingWrongQuestions] = React.useState(false);
-    
-    // 新增用於刪去法的狀態
-    const [excludedAnswers, setExcludedAnswers] = React.useState([]);
-    const [longPressTimeout, setLongPressTimeout] = React.useState(null);
-    const [submitMode, setSubmitMode] = React.useState(false);
-
-    const shuffleArray = React.useCallback((array) => {
-        const shuffled = [...array];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    }, []);
-
-    React.useEffect(() => {
-        const topicQuestions = unitQuestions[topic] || [];
-        const roundQuestions = topicQuestions.slice((round - 1) * 5, round * 5);
-        setAllQuestions(roundQuestions);
-    }, [topic, round, shuffleArray]);
-
-    React.useEffect(() => {
-        setCurrentQuestions(allQuestions);
-        setCurrentQuestion(0);
-        setCorrectAnswers(0);
-        setSelectedAnswer(null);
-        setShowFeedback(false);
-        setShowExplanation(false);
-        setIsReviewingWrongQuestions(false);
-        // 重置刪去法狀態
-        setExcludedAnswers([]);
-        setSubmitMode(false);
-    }, [allQuestions]);
-
-    // 新增長按處理函數
-    const handleLongPress = (answer) => {
-  if (showFeedback) return;
-  
-  const optionButton = document.querySelector(`button[data-option="${answer}"]`);
-  
-  // 如果選項已被排除，則取消排除
-  if (excludedAnswers.includes(answer)) {
-    setExcludedAnswers(excludedAnswers.filter(item => item !== answer));
-    if (optionButton) optionButton.classList.remove('excluded-option');
-  } else {
-    // 否則將其添加到排除列表
-    setExcludedAnswers([...excludedAnswers, answer]);
-    if (optionButton) optionButton.classList.add('excluded-option');
-  }
-};
-
-    // 觸控事件處理函數
-  const handleTouchStart = (answer) => {
-  if (showFeedback) return;
-  
-  // 獲取選項按鈕元素
-  const optionButton = document.querySelector(`button[data-option="${answer}"]`);
-  
-  // 如果選項已被排除，我們將立即開始取消排除的處理
-  if (excludedAnswers.includes(answer)) {
-    setExcludedAnswers(prev => prev.filter(item => item !== answer));
-    return;
-  } 
-  // 如果選項未被排除，設置長按計時器
-  else {
-    if (optionButton) {
-      // 添加長按指示器樣式
-      optionButton.classList.add('long-press-indicator');
-    }
-    
-    // 設置長按計時器，時間縮短為300ms
-    const timeout = setTimeout(() => {
-      if (optionButton) {
-        // 先添加動畫效果類
-        optionButton.classList.add('excluding-option');
-        
-        // 動畫開始後立即更新狀態，確保即使手指放開也會保持刪除狀態
-        setExcludedAnswers(prev => [...prev, answer]);
-        
-        // 移除長按指示器樣式
-        optionButton.classList.remove('long-press-indicator');
-        
-        // 延遲一下再移除動畫類，讓動畫有時間完成
-        setTimeout(() => {
-          optionButton.classList.remove('excluding-option');
-        }, 300);
-      }
-    }, 300); // 縮短時間到300ms
-    
-    setLongPressTimeout(timeout);
-  }
-};
-
-const handleTouchEnd = () => {
-  // 清除任何正在進行的長按計時器
-  if (longPressTimeout) {
-    clearTimeout(longPressTimeout);
-    setLongPressTimeout(null);
-  }
-  
-  // 移除所有選項的長按指示器和過渡類
-  document.querySelectorAll('.long-press-indicator, .excluding-option, .removing-exclusion').forEach(el => {
-    el.classList.remove('long-press-indicator');
-    el.classList.remove('excluding-option');
-    el.classList.remove('removing-exclusion');
-  });
-};
-
-// 修改點擊處理函數，簡化邏輯
-const handleAnswerClick = (answer) => {
-  if (showFeedback) return;
-  
-  // 選項已被排除的情況下，點擊會取消排除
-  if (excludedAnswers.includes(answer)) {
-    // 立即從排除列表中移除
-    setExcludedAnswers(prev => prev.filter(item => item !== answer));
-    return;
-  }
-  
-  // 否則，設置選擇的答案並啟用提交模式
-  setSelectedAnswer(answer);
-  setSubmitMode(true);
-};
-
-    // 提交答案函數
-    const submitAnswer = () => {
-        setShowFeedback(true);
-        const correct = selectedAnswer === currentQuestions[currentQuestion].correctAnswer;
-        setIsCorrect(correct);
-
-        if (correct) {
-            setCorrectAnswers(correctAnswers + 1);
-        } else {
-            if (isReviewingWrongQuestions) {
-                setShowExplanation(true);
-            }
-            if (!isReviewingWrongQuestions) {
-                setWrongQuestions([...wrongQuestions, currentQuestions[currentQuestion]]);
-            }
-        }
-    };
-
-    // 修改後的下一題函數
-    const nextQuestion = () => {
-        if (currentQuestion < currentQuestions.length - 1) {
-            setCurrentQuestion(currentQuestion + 1);
-            setSelectedAnswer(null);
-            setShowFeedback(false);
-            setShowExplanation(false);
-            setExcludedAnswers([]);  // 重置排除選項
-            setSubmitMode(false);    // 重置提交模式
-        } else {
-            setQuizComplete(true);
-            if (!isReviewingWrongQuestions) {
-                onUpdateProgress(round);
-            }
-        }
-    };
-
-    const handleOptionClick = (option) => {
-        switch(option) {
-            case 'retry':
-                setIsReviewingWrongQuestions(true);
-                setCurrentQuestions(shuffleArray(wrongQuestions));
-                setQuizComplete(false);
-                setCurrentQuestion(0);
-                setCorrectAnswers(0);
-                setSelectedAnswer(null);
-                setShowFeedback(false);
-                setShowExplanation(false);
-                setExcludedAnswers([]);  // 重置排除選項
-                setSubmitMode(false);    // 重置提交模式
-                break;
-            case 'nextRound':
-                if (round < 3) {
-                    setRound(prev => prev + 1);
-                    setWrongQuestions([]);
-                    setIsReviewingWrongQuestions(false);
-                    setQuizComplete(false);
-                    setExcludedAnswers([]);  // 重置排除選項
-                    setSubmitMode(false);    // 重置提交模式
-                } else {
-                    onFinish('topics');
-                }
-                break;
-            case 'newTopic':
-                onFinish('topics');
-                break;
-            case 'home':
-                onFinish('home');
-                break;
-        }
-    };
-
-    // 修改後的選項渲染函數
-    const renderQuestionOptions = (q) => {
-  return (
-    <div className="space-y-3">
-      {q.options.map((option, index) => {
-        const isExcluded = excludedAnswers.includes(option.value);
-        
-        return (
-          <button
-            key={index}
-            data-option={option.value}
-            onClick={() => handleAnswerClick(option.value)}
-            onTouchStart={() => handleTouchStart(option.value)}
-            onTouchEnd={handleTouchEnd}
-            onTouchCancel={handleTouchEnd}
-            disabled={showFeedback}
-            className={`
-              w-full p-4 rounded-xl transition-all
-              border flex items-center justify-between user-select-none
-              ${showFeedback && selectedAnswer === option.value
-                ? isCorrect
-                  ? 'bg-teal-50 border-teal-300 text-teal-800' 
-                  : 'bg-pink-50 border-pink-300 text-pink-800'
-                : isExcluded
-                  ? 'bg-white border-slate-200 text-slate-400 opacity-80'
-                  : selectedAnswer === option.value && !showFeedback
-                    ? 'bg-slate-100 border-slate-300 text-slate-800'
-                    : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
-              }
-              relative
-            `}
-          >
-            {/* 保留動畫效果的刪除線 */}
-            {isExcluded && (
-              <div className="absolute inset-0 flex items-center pointer-events-none z-20">
-                <div className="h-0.5 w-full bg-red-400 opacity-90 strike-animation"></div>
-              </div>
-            )}
-            
-            <div className="flex items-center relative z-10">
-              <span className={`
-                flex-shrink-0 w-6 h-6 mr-3 rounded-full
-                flex items-center justify-center
-                ${showFeedback && selectedAnswer === option.value
-                  ? isCorrect
-                    ? 'bg-gradient-to-r from-emerald-400 to-green-500 text-white'
-                    : 'bg-gradient-to-r from-pink-400 to-red-400 text-white'
-                  : selectedAnswer === option.value && !showFeedback
-                    ? 'bg-slate-300 text-white'
-                    : 'border-2 border-slate-300'
-                }
-              `}>
-                {showFeedback && selectedAnswer === option.value && (
-                  isCorrect 
-                    ? <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                    : <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                )}
-                {selectedAnswer === option.value && !showFeedback && (
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                )}
-              </span>
-              {option.text && <span className={isExcluded ? 'line-through' : ''}>{option.text}</span>}
-              {option.image && (
-                <div className={`quiz-option-image ml-2 ${isExcluded ? 'opacity-70' : ''}`}>
-                  <img src={option.image} alt={`選項 ${option.value}`} className="h-8 object-contain" />
-                </div>
-              )}
-            </div>
-          </button>
-        );
-      })}
     </div>
-  );
-};
-    const q = currentQuestions[currentQuestion];
-    if (!q) return <div>載入中...</div>;
-
-    const progress = ((currentQuestion + 1) / currentQuestions.length) * 100;
-
-    if (quizComplete) {
-        const message = isReviewingWrongQuestions 
-            ? "恭喜你完成了錯題練習！" 
-            : `您已完成第 ${round} 回合的題目。`;
-            
-        return (
-            <div className="p-4 max-w-md mx-auto">
-                <h2 className="text-xl font-bold mb-4 text-center">
-                    {message}
-                </h2>
-                
-                {!isReviewingWrongQuestions && (
-                    <div className="mt-6 p-6 bg-gradient-to-br from-pink-100 to-amber-100 rounded-2xl shadow-lg">
-                        <div className="flex flex-col items-center space-y-4">
-                            {/* 動態獎勵圖標 */}
-                            <div className="animate-bounce">
-                                {correctAnswers === 5 ? (
-                                    <svg className="w-16 h-16 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                                    </svg>
-                                ) : correctAnswers >= 3 ? (
-                                    <svg className="w-16 h-16 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                    </svg>
-                                ) : (
-                                    <svg className="w-16 h-16 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5s.67 1.5 1.5 1.5zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-                                    </svg>
-                                )}
-                            </div>
-                            
-                            {/* 得分圓圈 */}
-                            <div className="relative">
-                                <svg className="w-32 h-32" viewBox="0 0 36 36">
-                                    <path 
-                                        d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke="#eee"
-                                        strokeWidth="3"
-                                    />
-                                    <path 
-                                        d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none"
-                                        stroke={correctAnswers === 5 ? "url(#goldGradient)" : correctAnswers >= 3 ? "url(#pinkGradient)" : "url(#grayGradient)"}
-                                        strokeWidth="3"
-                                        strokeDasharray={`${correctAnswers * 20}, 100`}
-                                    />
-                                </svg>
-                                
-                                {/* 漸層定義 */}
-                                <svg width="0" height="0">
-                                    <defs>
-                                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style={{stopColor:"#FFD700", stopOpacity:1}} />
-                                            <stop offset="100%" style={{stopColor:"#FFA500", stopOpacity:1}} />
-                                        </linearGradient>
-                                        <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style={{stopColor:"#FF69B4", stopOpacity:1}} />
-                                            <stop offset="100%" style={{stopColor:"#FF1493", stopOpacity:1}} />
-                                        </linearGradient>
-                                        <linearGradient id="grayGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style={{stopColor:"#A9A9A9", stopOpacity:1}} />
-                                            <stop offset="100%" style={{stopColor:"#708090", stopOpacity:1}} />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                                
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-3xl font-bold text-zinc-800">
-                                        {correctAnswers * 20}%
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            {/* 文字描述 */}
-                            <div className="text-center">
-                                <h3 className="text-xl font-bold mb-2">
-                                    {correctAnswers === 5 
-                                        ? "完美！太棒了！" 
-                                        : correctAnswers >= 3 
-                                            ? "做得很好！" 
-                                            : "繼續加油！"
-                                    }
-                                </h3>
-                                <p className="text-zinc-600">
-                                    您在這回合中答對了 {correctAnswers} 題，答對率為 {correctAnswers * 20}%
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                
-                {/* 如果有錯題且還沒進行錯題練習，只顯示錯題練習按鈕 */}
-                {wrongQuestions.length > 0 && !isReviewingWrongQuestions && (
-                    <button 
-                        onClick={() => handleOptionClick('retry')} 
-                        className="w-full mb-3 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
-                    >
-                        錯題再來一次
-                    </button>
-                )}
-                
-                {/* 只有在沒有錯題或已完成錯題練習時，才顯示下一步選項 */}
-                {(wrongQuestions.length === 0 || isReviewingWrongQuestions) && (
-                    <div>
-                        {round < 3 && (
-                            <button 
-                                onClick={() => handleOptionClick('nextRound')} 
-                                className="w-full mb-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                            >
-                                進入下一回合
-                            </button>
-                        )}
-                        
-                        {round === 3 && (
-                            <button 
-                                onClick={() => handleOptionClick('newTopic')} 
-                                className="w-full mb-3 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                            >
-                                選擇新單元
-                            </button>
-                        )}
-                        
-                        <button 
-                            onClick={() => handleOptionClick('home')} 
-                            className="w-full py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-                        >
-                            回到首頁
-                        </button>
-                    </div>
-                )}
-            </div>
-        );
-    }
-
-    return (
-        <div className="p-4 max-w-md mx-auto relative">
-            <div className="quiz-container">
-                <div className="text-sm text-zinc-500 mb-2 italic">
-                    提示：長按選項可將其排除
+    
+    <!-- Podcast 播放器 1 -->
+    <div id="player-ep13" class="podcast-player bg-blue-100 p-3 rounded-lg mb-4 hidden">
+        <div class="flex items-center mb-2">
+            <button class="play-button mr-3" data-audio="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Korea's Briefest Martial Law and Aftermath.wav" data-target="ep13">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+            </button>
+            <div class="flex-grow">
+                <div class="audio-progress-container w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div class="audio-progress-bar bg-blue-600 h-full w-0"></div>
                 </div>
-                <div className="mb-4 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                    <div className="bg-blue-600 h-2.5 rounded-full" style={{width: `${progress}%`}}></div>
+                <div class="audio-time-display w-full mt-1 text-xs text-gray-600 flex justify-between">
+                    <span class="current-time">0:00</span>
+                    <span class="duration-time">0:00</span>
                 </div>
-                <h2 className="text-xl font-bold mb-4">{topic} - 第 {round} 回合</h2>
-                <div className="quiz-question-image">
-                    <img src={q.questionImage} alt="題目" className="w-full" />
-                </div>
-                {renderQuestionOptions(q)}
-                
-                {/* 提交按鈕 */}
-                {submitMode && !showFeedback && (
-                    <button
-                        onClick={submitAnswer}
-                        className="w-full mt-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                    >
-                        提交答案
-                    </button>
-                )}
-                
-                {showFeedback && (
-                    <div className={`mt-4 p-4 rounded-lg ${
-                        isCorrect 
-                            ? 'bg-gradient-to-r from-emerald-50 to-green-100 border border-teal-200 text-teal-800' 
-                            : 'bg-gradient-to-r from-pink-50 to-red-50 border border-pink-200 text-pink-800'
-                    } flex items-center`}>
-                        <span className={`
-                            flex-shrink-0 w-8 h-8 mr-3 rounded-full
-                            flex items-center justify-center
-                            ${isCorrect 
-                                ? 'bg-gradient-to-r from-emerald-400 to-green-500' 
-                                : 'bg-gradient-to-r from-pink-400 to-red-400'
-                            } text-white
-                        `}>
-                            {isCorrect 
-                                ? <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                                : <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            }
-                        </span>
-                        <span className="font-medium">
-                            {isCorrect ? '答對了！' : '答錯了。'}
-                        </span>
-                    </div>
-                )}
-                
-                {showExplanation && (
-                    <div className="mt-4 border border-yellow-200 rounded-lg overflow-hidden">
-                        <div className="bg-yellow-50 px-4 py-2 border-b border-yellow-200">
-                            <h3 className="text-yellow-800 font-medium flex items-center">
-                                <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                解析
-                            </h3>
-                        </div>
-                        <div className="bg-white p-2">
-                            <div className="quiz-explanation-image">
-                                <img src={q.explanationImage} alt="題目解析" className="w-full" />
-                            </div>
-                        </div>
-                    </div>
-                )}
-                
-                {showFeedback && (
-                    <button
-                        onClick={nextQuestion}
-                        className="w-full mt-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                    >
-                        {currentQuestion === currentQuestions.length - 1 ? '完成' : '下一題'}
-                    </button>
-                )}
             </div>
         </div>
-    );
-}
-
-
-		// Footer 組件
-function Footer() {
-    return (
-        <footer className="bg-white border-t border-zinc-100 py-4 mt-auto">
-            <div className="max-w-3xl mx-auto px-4 text-center">
-                <p className="text-zinc-600 text-sm mb-1">Longteng Education Co., Ltd. All rights reserved</p>
-                <p className="text-zinc-500 text-sm">版權所有龍騰文化事業股份有限公司</p>
+        <audio id="audio-ep13" class="hidden">
+            <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Korea's Briefest Martial Law and Aftermath.wav" type="audio/mpeg">
+        </audio>
+    </div>
+    
+    <!-- Podcast 卡片 2 -->
+    <div class="podcast-card flex p-3 cursor-pointer" data-podcast-id="ep14">
+        <img src="https://hackmd.io/_uploads/HJLdYf1gle.jpg" alt="Podcast 封面" class="podcast-image rounded-lg mr-3">
+        <div class="flex-grow">
+            <span class="podcast-tag">嗨！公民電台</span>
+            <h3 class="card-title text-base">EP14: 2024美國大選後的全球政治走向</h3>
+            <div class="flex items-center justify-between mt-2">
+                <div class="text-sm text-gray-500">00:00</div>
+                <button class="play-btn-icon mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                </button>
             </div>
-        </footer>
-    );
-}
+        </div>
+    </div>
+    
+    <!-- Podcast 播放器 2 -->
+    <div id="player-ep14" class="podcast-player bg-blue-100 p-3 rounded-lg mb-4 hidden">
+        <div class="flex items-center mb-2">
+            <button class="play-button mr-3" data-audio="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Trump Returns_ US Election 2024 Analysis.wav" data-target="ep14">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+            </button>
+            <div class="flex-grow">
+                <div class="audio-progress-container w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div class="audio-progress-bar bg-blue-600 h-full w-0"></div>
+                </div>
+                <div class="audio-time-display w-full mt-1 text-xs text-gray-600 flex justify-between">
+                    <span class="current-time">0:00</span>
+                    <span class="duration-time">0:00</span>
+                </div>
+            </div>
+        </div>
+        <audio id="audio-ep14" class="hidden">
+            <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Trump Returns_ US Election 2024 Analysis.wav" type="audio/mpeg">
+        </audio>
+    </div>
+    
+    <!-- Podcast 卡片 3 -->
+    <div class="podcast-card flex p-3 cursor-pointer" data-podcast-id="ep15">
+        <img src="https://hackmd.io/_uploads/SkcutM1ggx.jpg" alt="Podcast 封面" class="podcast-image rounded-lg mr-3">
+        <div class="flex-grow">
+            <span class="podcast-tag">嗨！公民電台</span>
+            <h3 class="card-title text-base">EP15: 職場霸凌事件與勞工權益保障</h3>
+            <div class="flex items-center justify-between mt-2">
+                <div class="text-sm text-gray-500">00:00</div>
+                <button class="play-btn-icon mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Podcast 播放器 3 -->
+    <div id="player-ep15" class="podcast-player bg-blue-100 p-3 rounded-lg mb-4 hidden">
+        <div class="flex items-center mb-2">
+            <button class="play-button mr-3" data-audio="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Workplace Bullying Tragedy, Legal Framework, and Prevention.wav" data-target="ep15">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+            </button>
+            <div class="flex-grow">
+                <div class="audio-progress-container w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div class="audio-progress-bar bg-blue-600 h-full w-0"></div>
+                </div>
+                <div class="audio-time-display w-full mt-1 text-xs text-gray-600 flex justify-between">
+                    <span class="current-time">0:00</span>
+                    <span class="duration-time">0:00</span>
+                </div>
+            </div>
+        </div>
+        <audio id="audio-ep15" class="hidden">
+            <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Workplace Bullying Tragedy, Legal Framework, and Prevention.wav" type="audio/mpeg">
+        </audio>
+    </div>
+</div>
+</div>
 
-        // App 主組件
-        function App() {
-    const [currentPage, setCurrentPage] = React.useState('home');
-    const [selectedTopic, setSelectedTopic] = React.useState(null);
-    const [topicProgress, setTopicProgress] = React.useState(ProgressManager.getProgress());
-    const [startRound, setStartRound] = React.useState(1);
+            
+            <!-- 文章部分 -->
+            <div class="content-section">
+                <h2 class="section-title">本期文章</h2>
+                
+                <!-- 第一篇新聞 -->
+<div class="article-card mb-4 cursor-pointer hover:shadow-lg transition-shadow duration-300" data-article="korea-martial-law">
+    <img src="https://hackmd.io/_uploads/HJm_Ffyxel.jpg" alt="韓國史上最短戒嚴" class="article-image">
+    <div class="p-4">
+        <span class="article-tag tag-news">嗨！News</span>
+        <h3 class="card-title">韓國史上最短戒嚴 尹錫悅宣布6 小時內解除</h3>
+        <p class="card-excerpt">本文將分析韓國近期發生的短暫戒嚴事件，探討其背後的政治與社會因素...</p>
+        
+        <div class="flex justify-end">
+            <span class="text-sm text-gray-500">5分鐘閱讀</span>
+        </div>
+    </div>
+</div>
+                
+                <!-- 第二篇新聞 -->
+<div class="article-card mb-4 cursor-pointer hover:shadow-lg transition-shadow duration-300" data-article="us-election">
+    <img src="https://hackmd.io/_uploads/HJLdYf1gle.jpg" alt="美國大選" class="article-image">
+    <div class="p-4">
+        <span class="article-tag tag-news">嗨！News</span>
+        <h3 class="card-title">2024 美國大選 川普重返白宮共和黨全面執政</h3>
+        <p class="card-excerpt">2024年美國大選結果出爐，川普成功重返白宮，共和黨在國會也取得多數席次...</p>
+        
+        <div class="flex justify-end">
+            <span class="text-sm text-gray-500">6分鐘閱讀</span>
+        </div>
+    </div>
+</div>
+                
+                <!-- 第三篇法律 -->
+<div class="article-card cursor-pointer hover:shadow-lg transition-shadow duration-300" data-article="workplace-bullying">
+    <img src="https://hackmd.io/_uploads/SkcutM1ggx.jpg" alt="職場霸凌" class="article-image">
+    <div class="p-4">
+        <span class="article-tag tag-law">嗨！Law</span>
+        <h3 class="card-title">職場霸凌悲劇震驚社會 專家呼籲強化法制保障勞工權益</h3>
+        <p class="card-excerpt">近期發生的職場霸凌事件引起社會關注，本文分析現行法律保障不足之處...</p>
+        
+        <div class="flex justify-end">
+            <span class="text-sm text-gray-500">7分鐘閱讀</span>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 
-    // 添加離開警告
-    React.useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            // 如果正在進行測驗（不在首頁），則顯示警告
-            if (currentPage !== 'home') {
-                const message = "離開頁面將無法保存您的學習進度。確定要離開嗎？";
-                e.preventDefault();
-                e.returnValue = message;
-                return message;
+        
+       
+
+    <!-- 文章頁面 -->
+    <div id="article-page" class="page-transition" style="display: none;">
+        <!-- 頁頭 -->
+        <div class="header">
+            <div class="header-content-article">
+                <button class="back-button" id="back-to-main">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5"></path>
+                        <path d="M12 19l-7-7 7-7"></path>
+                    </svg>
+                    <span class="ml-1">返回</span>
+                </button>
+                <div class="title">嗨！公民</div>
+                <div style="width: 24px;"></div> <!-- 為了平衡布局的空元素 -->
+            </div>
+        </div>
+        
+        <!-- 韓國戒嚴文章 -->
+        <div id="korea-martial-law" class="article-container">
+            <!-- 文章頭部 -->
+            <div class="article-header">
+                <span class="article-tag tag-news">嗨！News</span>
+                <h1 class="article-title">韓國史上最短戒嚴 尹錫悅宣布6小時內解除</h1>
+                <div class="article-meta">
+                    <span>113學年 No.13期</span>
+                </div>
+            </div>
+            
+            <!-- 文章內容 -->
+            <div class="article-content">
+                <p>
+                    2024 年 12 月 3 日深夜，韓國總統尹錫悅在無預警的狀態下突然宣布全國進入戒嚴，並且對外宣稱此舉是為了「削除親北韓勢力」，確保國政體制穩定。然而，這項決策未經國會同意，令各界震驚，也震驚全球。消息曝光後，反對聲浪迅速擴大，首爾市中心聚集了大批抗議人群。國會也火速召開緊急會議，並以歷史性票數通過解除戒嚴。不到 6 小時，尹錫悅於 12 月 4 日凌晨 4 時 20 分宣布撤回軍隊，戒嚴令正式解除，成為韓國史上最短的戒嚴事件。
+                </p>
+
+                <p>
+                    尹錫悅對此解釋，近來在野黨持續阻礙政府運作，利用彈劾、削減預算等手段讓國家陷入癱瘓，甚至使韓國成為「毒品天堂」，嚴重影響社會治安。但外界普遍認為，他無預警戒嚴與近期執政危機有關，包括民調低迷、夫人貪汙醜聞發酵，以及執政黨內部分裂，讓他陷入四面楚歌。
+                </p>
+
+                <!-- 在文章末尾保留插圖 -->
+                <div class="flex justify-center my-4">
+                    <img src="https://hackmd.io/_uploads/B1sEk7kxex.png" alt="韓國戒嚴相關圖片" class="rounded-lg shadow-md max-w-full" style="max-height: 400px;">
+                </div>
+
+                <p>
+                    戒嚴令的具體措施包括禁止政治活動、嚴控新聞媒體、強制醫療人員復工等，短時間內已造成市場動盪，韓元兌美元更是一度崩跌 2.7%。外媒普遍批評此舉「違反民主原則」，部分國際人權組織更譴責韓國政府以國安為由施加言論自由。
+                </p>
+
+                <p>
+                    儘管戒嚴解除，韓國政局並未因此平息。在野的共同民主黨立即提出彈劾案，並於 12 月 14 日在國會表決通過，使尹錫悅暫時停職，等待憲法法院裁決。與此同時，檢方以「涉嫌內亂罪」對尹錫悅展開調查。12 月 15 日，他正式遭到逮捕，成為韓國史上首位在任內被羈押的總統。
+                </p>
+                
+                <!-- 現代化的音頻播放器設計 -->
+<div class="audio-player bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 my-6 shadow-lg">
+    <div class="flex items-center">
+        <div class="w-16 h-16 min-w-[4rem] rounded-lg shadow-md overflow-hidden mr-3">
+            <img src="https://hackmd.io/_uploads/HJm_Ffyxel.jpg" alt="Podcast 封面" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-grow">
+            <div class="audio-title text-white font-bold mb-1 text-sm">EP13: 從韓國戒嚴到台灣民主發展之路</div>
+            <div class="text-blue-100 text-xs mb-2">收聽文章導讀與深度分析</div>
+            <audio controls class="w-full h-8 custom-audio">
+                <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Korea's Briefest Martial Law and Aftermath.wav" type="audio/mpeg">
+                您的瀏覽器不支持音頻播放。
+            </audio>
+        </div>
+    </div>
+</div>
+                
+                <!-- 測驗區塊 -->
+<div class="quiz-section">
+    <h3 class="quiz-title">測驗你的理解</h3>
+    <p class="mb-4">完成這個簡短的測驗，測試你對韓國戒嚴事件的了解程度。</p>
+    <div id="quiz-korea" class="quiz-content">
+        <div class="quiz-question mb-4">
+            <p class="font-semibold mb-2">1. 尹錫悅宣布布戒嚴的作法被認為挑戰了韓國民主制度的哪一個核心原則？</p>
+            <div class="ml-4">
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="A" class="mt-1 mr-2"> (A) 政府對經濟的完全控制</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="B" class="mt-1 mr-2"> (B) 公民的完全服從與遵守</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="C" class="mt-1 mr-2"> (C) 軍隊對國會的全面支持</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="D" class="mt-1 mr-2"> (D) 民主機構之間的制衡與分權</label></div>
+            </div>
+        </div>
+        <div class="quiz-question mb-4">
+            <p class="font-semibold mb-2">2. 戒嚴解除後，國會迅速通過彈劾總統的舉措反映了哪一項民主制度的運作？</p>
+            <div class="ml-4">
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="A" class="mt-1 mr-2"> (A) 行政機關的絕對優勢</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="B" class="mt-1 mr-2"> (B) 司法對立法的直接監督</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="C" class="mt-1 mr-2"> (C) 公民對國會議員的直接罷免</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="D" class="mt-1 mr-2"> (D) 民主機構對行政權力的監督與制約</label></div>
+            </div>
+        </div>
+        <div class="quiz-question mb-4">
+            <p class="font-semibold mb-2">3. 此次戒嚴事件對韓國政治造成的最主要影響是什麼？</p>
+            <div class="ml-4">
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="A" class="mt-1 mr-2"> (A) 韓國經濟快速復甦</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="B" class="mt-1 mr-2"> (B) 軍隊接管了政府的主要職能</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="C" class="mt-1 mr-2"> (C) 揭示了執政黨與在野黨的嚴重對立</label></div>
+                <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="D" class="mt-1 mr-2"> (D) 國會權力被削弱，戒嚴制度被強化</label></div>
+            </div>
+        </div>
+        <div class="text-right">
+            <button id="check-answers" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">檢查答案</button>
+        </div>
+        <div id="quiz-result" class="hidden mt-4 p-3 rounded-lg"></div>
+    </div>
+    <button class="quiz-button">
+        開始測驗
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+        </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 美國大選文章 -->
+<div id="us-election" class="article-container">
+    <!-- 文章頭部 -->
+    <div class="article-header">
+        <span class="article-tag tag-news">嗨！News</span>
+        <h1 class="article-title">2024 美國大選 川普重返白宮共和黨全面執政</h1>
+        <div class="article-meta">
+            <span>113學年 No.13期</span>
+        </div>
+    </div>
+    
+    <!-- 文章內容 -->
+    <div class="article-content">
+        <p>
+            2024 年美國總統大選於 11 月 5 日順利落幕，代表共和黨參選的川普以 312 張選舉人票的壓倒性優勢擊敗民主黨候選人賀錦麗，成功重返白宮，正式成為美國第 47 任總統。同時，共和黨在國會選舉中亦表現出色，不僅取得參議院的過半席次，更在眾議院贏得 218 席以上的多數優勢，確立全面執政格局。
+        </p>
+
+        <p>
+            此次大選還包括國會改選、地方選舉與公投等。其中，眾議院的 435 個席次全部改選，參議院則改選 34 個席次，此外，各州同步舉行州長、市長及地方議員等多項選舉。
+        </p>
+
+        <p>
+            本次選舉中，川普成功拿下多個尼亞加州、密西根州、威斯康辛州、北卡羅萊納州、喬治亞州、亞利桑那州及內華達州等 7 個搖擺州的選舉人票，使其超越 270 張選舉人票的當選門檻。
+        </p>
+
+        <p>
+            美國總統選舉採用選舉人團制度，全國共 538 張選舉人票，候選人需取得至少 270 張方可當選。各州選舉人票數依人口比例分配，除緬因州和內布拉斯加州採用選區分配制外，其餘各州均採贏者全拿制。至於國會選舉，眾議院 435 個席次按人口比例分配至各州，每兩年全面改選一次；參議院則由每州選出 2 名議員，任期 6 年，每兩年改選 1/3。
+        </p>
+        
+        <!-- 插圖 -->
+        <div class="flex justify-center my-4">
+            <img src="https://hackmd.io/_uploads/HJObbBylge.png" alt="美國大選相關圖片" class="rounded-lg shadow-md max-w-full" style="max-height: 400px;">
+        </div>
+
+        <!-- 現代化的音頻播放器設計 -->
+        <div class="audio-player bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 my-6 shadow-lg">
+            <div class="flex items-center">
+                <div class="w-16 h-16 min-w-[4rem] rounded-lg shadow-md overflow-hidden mr-3">
+                    <img src="https://hackmd.io/_uploads/HJLdYf1gle.jpg" alt="Podcast 封面" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-grow">
+                    <div class="audio-title text-white font-bold mb-1 text-sm">EP14: 2024美國大選後的全球政治走向</div>
+                    <div class="text-blue-100 text-xs mb-2">收聽文章導讀與深度分析</div>
+                    <audio controls class="w-full h-8 custom-audio">
+                        <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Trump Returns_ US Election 2024 Analysis.wav" type="audio/mpeg">
+                        您的瀏覽器不支持音頻播放。
+                    </audio>
+                </div>
+            </div>
+        </div>
+                
+        <!-- 測驗區塊 -->
+        <div class="quiz-section">
+            <h3 class="quiz-title">測驗你的理解</h3>
+            <p class="mb-4">完成這個簡短的測驗，測試你對美國選舉制度的了解程度。</p>
+            <div id="quiz-us-election" class="quiz-content">
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">1. 美國總統選舉採用的制度是什麼？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="A" class="mt-1 mr-2"> (A) 比例代表制</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="B" class="mt-1 mr-2"> (B) 選舉人團制度</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="C" class="mt-1 mr-2"> (C) 單一選區多數決制</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="D" class="mt-1 mr-2"> (D) 複數選區比例代表制</label></div>
+                    </div>
+                </div>
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">2. 搖擺州在美國大選中的作用是什麼？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="A" class="mt-1 mr-2"> (A) 減少選舉人票的總數</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="B" class="mt-1 mr-2"> (B) 使小黨候選人更有勝算</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="C" class="mt-1 mr-2"> (C) 對選舉結果產生決定性影響</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="D" class="mt-1 mr-2"> (D) 確保所有州都有相等的選舉權重</label></div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button id="check-answers-us-election" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">檢查答案</button>
+                </div>
+                <div id="quiz-result-us-election" class="hidden mt-4 p-3 rounded-lg"></div>
+            </div>
+            <button class="quiz-button">
+                開始測驗
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- 職場霸凌文章 -->
+<div id="workplace-bullying" class="article-container">
+    <!-- 文章頭部 -->
+    <div class="article-header">
+        <span class="article-tag tag-law">嗨！Law</span>
+        <h1 class="article-title">職場霸凌悲劇震驚社會 專家呼籲強化法制保障勞工權益</h1>
+        <div class="article-meta">
+            <span>113學年 No.13期</span>
+        </div>
+    </div>
+    
+    <!-- 文章內容 -->
+    <div class="article-content">
+        <p>
+            2024 年年底，國內某公部門驚傳員工輕生事件，起因疑與長期職場霸凌有關。據多名同事透露，該名員工生前經常遭受上級言語羞辱、超負荷工作要求，甚至在辦公室內被當眾斥責，導致精神狀況受到嚴重影響。
+        </p>
+
+        <p>
+            此事經媒體報導後，相關單位也迅速成立調查小組。依據報告指出，該名員工輕生事件難以直接證明與上級的不當行為有因果關係。這份報告不僅引發外界質疑，部分媒體取得的錄音檔更顯示該主管在會議上對多次對下屬口出惡言，引起社會輿論譁然。
+        </p>
+
+        <p>
+            面對社會壓力，該單位高層隨即向社會公開道歉，並強調將檢討內部文化工作倫理，以避免類似悲劇再發生。該主管雖已請辭，組織內部也承諾將加強心理健康輔導機制；然而，許多勞工團體認為，僅靠內部改革不足以防止職場霸凌，應透過立法提供更有力的保障。
+        </p>
+
+        <p>
+            多名勞動法專家建議，應參考國際經驗制定專門的反霸凌法案，明確定義職場霸凌行為，並建立獨立申訴與調查機制，以確保受害者能獲得公正對待。此外，強化主管職培訓、推動心理輔導機制，也將是改善職場環境的重要一步。
+        </p>
+
+        <!-- 插圖 -->
+        <div class="flex justify-center my-4">
+            <img src="https://hackmd.io/_uploads/r1TFMSJgeg.png" alt="職場霸凌相關圖片" class="rounded-lg shadow-md max-w-full" style="max-height: 400px;">
+        </div>
+
+        <!-- 現代化的音頻播放器設計 -->
+        <div class="audio-player bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 my-6 shadow-lg">
+            <div class="flex items-center">
+                <div class="w-16 h-16 min-w-[4rem] rounded-lg shadow-md overflow-hidden mr-3">
+                    <img src="https://hackmd.io/_uploads/SkcutM1ggx.jpg" alt="Podcast 封面" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-grow">
+                    <div class="audio-title text-white font-bold mb-1 text-sm">EP15: 職場霸凌事件與勞工權益保障</div>
+                    <div class="text-blue-100 text-xs mb-2">收聽文章導讀與深度分析</div>
+                    <audio controls class="w-full h-8 custom-audio">
+                        <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Workplace Bullying Tragedy, Legal Framework, and Prevention.wav" type="audio/mpeg">
+                        您的瀏覽器不支持音頻播放。
+                    </audio>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 測驗區塊 -->
+        <div class="quiz-section">
+            <h3 class="quiz-title">測驗你的理解</h3>
+            <p class="mb-4">完成這個簡短的測驗，測試你對職場霸凌法律的了解程度。</p>
+            <div id="quiz-workplace" class="quiz-content">
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">1. 根據專家建議，受害者蒐集證據時需注意什麼？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="A" class="mt-1 mr-2"> (A) 只需口頭描述即可</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="B" class="mt-1 mr-2"> (B) 向所有同事公開證據</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="C" class="mt-1 mr-2"> (C) 確保收集過程符合法律規範</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q1" value="D" class="mt-1 mr-2"> (D) 在取證過程中公開指責對方</label></div>
+                    </div>
+                </div>
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">2. 以下哪一項屬於職場霸凌的心理騷擾方式？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="A" class="mt-1 mr-2"> (A) 製造誤職場環境</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="B" class="mt-1 mr-2"> (B) 經常規勸凌者實善意溝通</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="C" class="mt-1 mr-2"> (C) 將所有情緒配的不表達</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q2" value="D" class="mt-1 mr-2"> (D) 向諮商師傾訴並接受專業建議</label></div>
+                    </div>
+                </div>
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">3. 在預防職場霸凌的組織文化中，應著與什麼？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="A" class="mt-1 mr-2"> (A) 加強績效壓力以激勵員工</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="B" class="mt-1 mr-2"> (B) 嚴格限制員工的交流機會</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="C" class="mt-1 mr-2"> (C) 強調高績效而忽視人際關係</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q3" value="D" class="mt-1 mr-2"> (D) 創造相互尊重和包容的工作環境</label></div>
+                    </div>
+                </div>
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">4. 職場霸凌對個人身心的常見影響是什麼？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q4" value="A" class="mt-1 mr-2"> (A) 工作表現顯著提升</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q4" value="B" class="mt-1 mr-2"> (B) 單純階段性入工作</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q4" value="C" class="mt-1 mr-2"> (C) 加強對團隊的歸屬感</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q4" value="D" class="mt-1 mr-2"> (D) 精神壓力增大，甚至可能引發抑鬱</label></div>
+                    </div>
+                </div>
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">5. 企業為防止職場霸凌，應採取哪些措施？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q5" value="A" class="mt-1 mr-2"> (A) 減少對管理者的監督</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q5" value="B" class="mt-1 mr-2"> (B) 設立有效的申訴和調查機制</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q5" value="C" class="mt-1 mr-2"> (C) 僅依靠高層管理人員進行處理</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q5" value="D" class="mt-1 mr-2"> (D) 不公開任何霸凌事件的處理結果</label></div>
+                    </div>
+                </div>
+                <div class="quiz-question mb-4">
+                    <p class="font-semibold mb-2">6. 職場霸凌的受害者應如何利用法律保障自身權益？</p>
+                    <div class="ml-4">
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q6" value="A" class="mt-1 mr-2"> (A) 無需任何證據即可提出控訴</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q6" value="B" class="mt-1 mr-2"> (B) 自行解決並不使用法律手段</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q6" value="C" class="mt-1 mr-2"> (C) 蒐集違法取證的資料直接業公開散播</label></div>
+                        <div class="mb-1"><label class="flex items-start"><input type="radio" name="q6" value="D" class="mt-1 mr-2"> (D) 向公司或外部工會投訴並尋求法律協助</label></div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button id="check-answers-workplace" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">檢查答案</button>
+                </div>
+                <div id="quiz-result-workplace" class="hidden mt-4 p-3 rounded-lg"></div>
+            </div>
+            <button class="quiz-button">
+                開始測驗
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+        
+        <!-- 文章頁面頁尾 -->
+        <div class="article-footer">
+            <p>Hi, Civics 嗨！公民 | 113學年 No.13期</p>
+        </div>
+    </div>
+
+    <script>
+        // 頁面切換功能
+const mainPage = document.getElementById('main-page');
+const articlePage = document.getElementById('article-page');
+const backToMainButton = document.getElementById('back-to-main');
+const articleCards = document.querySelectorAll('.article-card');
+const articleContainers = document.querySelectorAll('.article-container');
+
+// 點擊文章卡片顯示對應文章
+articleCards.forEach(card => {
+    card.addEventListener('click', function() {
+        const articleId = this.getAttribute('data-article');
+        
+        // 先滾動到頂部，然後再切換頁面
+        window.scrollTo({
+            top: 0,
+            behavior: 'instant' // 使用 'instant' 而不是默認的 'smooth'
+        });
+        
+        // 延遲一下再切換頁面，確保滾動已完成
+        setTimeout(() => {
+            // 隱藏主頁，顯示文章頁
+            mainPage.style.display = 'none';
+            articlePage.style.display = 'block';
+            
+            // 隱藏所有文章容器
+            articleContainers.forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // 顯示指定的文章
+            document.getElementById(articleId).style.display = 'block';
+        }, 10);
+    });
+});
+
+// 點擊返回按鈕回到主頁
+backToMainButton.addEventListener('click', function() {
+    articlePage.style.display = 'none';
+    mainPage.style.display = 'block';
+    
+    // 滾動到頁面頂部
+    window.scrollTo(0, 0);
+});
+        
+        // 播放器功能
+document.addEventListener('DOMContentLoaded', function() {
+    const podcastCards = document.querySelectorAll('.podcast-card');
+    const playButtons = document.querySelectorAll('.play-button');
+    const playBtnIcons = document.querySelectorAll('.play-btn-icon');
+    const audios = document.querySelectorAll('audio');
+    const players = document.querySelectorAll('.podcast-player');
+    
+    // 格式化時間為分:秒
+    function formatTime(seconds) {
+        if (!seconds || isNaN(seconds)) return "0:00";
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+    
+    // 停止所有音頻播放
+    function stopAllAudio() {
+        audios.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+        
+        // 重置所有播放按鈕狀態
+        playButtons.forEach(btn => {
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+        });
+        
+        playBtnIcons.forEach(btn => {
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+        });
+    }
+    
+    // 更新進度條和時間顯示
+    function updateProgress(audio, progressBar, currentTimeEl, durationTimeEl) {
+        if (!audio.duration) return;
+        
+        const percentage = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${percentage}%`;
+        
+        // 更新時間顯示
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        durationTimeEl.textContent = formatTime(audio.duration);
+        
+        // 更新對應的卡片時間顯示
+        const id = audio.id.replace('audio-', '');
+        const card = document.querySelector(`.podcast-card[data-podcast-id="${id}"]`);
+        if (card) {
+            const durationDisplay = card.querySelector('.text-sm.text-gray-500');
+            if (durationDisplay) {
+                durationDisplay.textContent = formatTime(audio.duration);
+            }
+        }
+    }
+    
+    // 初始化所有音頻卡片的時間顯示
+    function initializeAudioDurations() {
+        audios.forEach(audio => {
+            // 當音頻元數據加載完成後
+            audio.addEventListener('loadedmetadata', function() {
+                const id = audio.id.replace('audio-', '');
+                const card = document.querySelector(`.podcast-card[data-podcast-id="${id}"]`);
+                if (card) {
+                    const durationDisplay = card.querySelector('.text-sm.text-gray-500');
+                    if (durationDisplay) {
+                        durationDisplay.textContent = formatTime(audio.duration);
+                    }
+                }
+            });
+            
+            // 嘗試加載音頻
+            if (audio.readyState > 0) {  // 如果已經加載
+                const id = audio.id.replace('audio-', '');
+                const card = document.querySelector(`.podcast-card[data-podcast-id="${id}"]`);
+                if (card) {
+                    const durationDisplay = card.querySelector('.text-sm.text-gray-500');
+                    if (durationDisplay && audio.duration) {
+                        durationDisplay.textContent = formatTime(audio.duration);
+                    }
+                }
+            } else {
+                audio.load();  // 否則開始加載
+            }
+        });
+    }
+    
+    // 修改點擊播客卡片顯示/隱藏播放器的代碼
+podcastCards.forEach(card => {
+    card.addEventListener('click', function() {
+        const id = this.getAttribute('data-podcast-id');
+        const player = document.getElementById(`player-${id}`);
+        
+        // 顯示/隱藏播放器
+        if (player.classList.contains('hidden')) {
+            // 隱藏其他所有播放器並重置其他卡片樣式
+            players.forEach(p => {
+                if (p !== player) {
+                    p.classList.add('hidden');
+                }
+            });
+            
+            // 重置所有卡片的樣式
+            podcastCards.forEach(c => {
+                if (c !== this) {
+                    c.classList.remove('expanded');
+                }
+            });
+            
+            // 顯示當前播放器並添加樣式
+            player.classList.remove('hidden');
+            this.classList.add('expanded'); // 添加展開狀態的類
+            
+            // 自動播放（其他代碼保持不變）
+            const audio = player.querySelector('audio');
+            const playButton = player.querySelector('.play-button');
+            const btnIcon = this.querySelector('.play-btn-icon');
+            
+            if (audio && playButton) {
+                stopAllAudio();
+                
+                audio.play();
+                playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path></svg>';
+                btnIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path></svg>';
+                
+                // 更新進度條和時間（其他代碼保持不變）
+                const progressBar = player.querySelector('.audio-progress-bar');
+                const currentTimeEl = player.querySelector('.current-time');
+                const durationTimeEl = player.querySelector('.duration-time');
+                
+                updateProgress(audio, progressBar, currentTimeEl, durationTimeEl);
+                
+                // 添加時間更新事件
+                audio.addEventListener('timeupdate', function() {
+                    updateProgress(audio, progressBar, currentTimeEl, durationTimeEl);
+                });
+            }
+        } else {
+            // 隱藏播放器
+            player.classList.add('hidden');
+            this.classList.remove('expanded'); // 移除展開狀態的類
+            
+            // 暫停音頻（其他代碼保持不變）
+            const audio = player.querySelector('audio');
+            if (audio) {
+                audio.pause();
+                
+                // 重置播放按鈕
+                const playButton = player.querySelector('.play-button');
+                const btnIcon = this.querySelector('.play-btn-icon');
+                
+                if (playButton) {
+                    playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+                }
+                
+                if (btnIcon) {
+                    btnIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+                }
+            }
+        }
+    });
+});
+    
+    // 播放按鈕點擊事件
+    playButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // 防止事件冒泡到卡片
+            
+            const id = this.getAttribute('data-target');
+            const audio = document.getElementById(`audio-${id}`);
+            const player = this.closest('.podcast-player');
+            const progressBar = player.querySelector('.audio-progress-bar');
+            const currentTimeEl = player.querySelector('.current-time');
+            const durationTimeEl = player.querySelector('.duration-time');
+            const card = document.querySelector(`.podcast-card[data-podcast-id="${id}"]`);
+            const btnIcon = card.querySelector('.play-btn-icon');
+            
+            if (audio) {
+                if (audio.paused) {
+                    // 先停止所有音頻
+                    stopAllAudio();
+                    
+                    // 播放當前音頻
+                    audio.play();
+                    this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path></svg>';
+                    btnIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path></svg>';
+                    
+                    // 添加時間更新事件
+                    audio.addEventListener('timeupdate', function() {
+                        updateProgress(audio, progressBar, currentTimeEl, durationTimeEl);
+                    });
+                } else {
+                    // 暫停當前音頻
+                    audio.pause();
+                    this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+                    btnIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+                }
+            }
+        });
+    });
+    
+    // 音頻播放完成後重置按鈕
+    audios.forEach(audio => {
+        audio.addEventListener('ended', function() {
+            const id = this.id.replace('audio-', '');
+            const player = document.getElementById(`player-${id}`);
+            const playButton = player.querySelector('.play-button');
+            const card = document.querySelector(`.podcast-card[data-podcast-id="${id}"]`);
+            const btnIcon = card.querySelector('.play-btn-icon');
+            
+            if (playButton) {
+                playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+            }
+            
+            if (btnIcon) {
+                btnIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600"><path d="M8 5v14l11-7z"></path></svg>';
+            }
+        });
+    });
+    
+    // 初始化音頻時間
+    initializeAudioDurations();
+});
+
+        
+        // 測驗按鈕效果 - 只保留視覺反饋效果
+const quizButtons = document.querySelectorAll('.quiz-button');
+
+quizButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.add('opacity-75');
+        setTimeout(() => {
+            button.classList.remove('opacity-75');
+        }, 200);
+    });
+});
+        
+        // 添加URL歷史記錄支持
+        window.addEventListener('popstate', function(event) {
+            // 如果用戶按下瀏覽器的返回按鈕
+            if (articlePage.style.display === 'block') {
+                articlePage.style.display = 'none';
+                mainPage.style.display = 'block';
+            }
+        });
+        
+        // 為了支持分享特定文章的功能
+        const checkUrlForArticle = () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const articleId = hash.substring(1); // 移除 # 符號
+                const articleElement = document.getElementById(articleId);
+                
+                if (articleElement) {
+                    // 隱藏主頁，顯示文章頁
+                    mainPage.style.display = 'none';
+                    articlePage.style.display = 'block';
+                    
+                    // 隱藏所有文章容器
+                    articleContainers.forEach(container => {
+                        container.style.display = 'none';
+                    });
+                    
+                    // 顯示指定的文章
+                    articleElement.style.display = 'block';
+                }
             }
         };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        // 清理事件監聽器
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, [currentPage]);
-
-    React.useEffect(() => {
-        localStorage.setItem('mathQuizProgress', JSON.stringify(topicProgress));
-    }, [topicProgress]);
-
-    const handleStartQuiz = () => {
-        setCurrentPage('topics');
-    };
-
-    const handleSelectTopic = (topic) => {
-        setSelectedTopic(topic);
-        const progress = topicProgress[topic] || 0;
-        console.log(`選擇單元 ${topic}, 進度: ${progress}`);
         
-        if (progress === 3) {
-            setCurrentPage('reviewPrompt');
-        } else if (progress > 0) {
-            setCurrentPage('resumePrompt');
-        } else {
-            setStartRound(1);
-            setCurrentPage('quiz');
-        }
-    };
+        // 頁面載入時檢查URL
+        window.addEventListener('DOMContentLoaded', checkUrlForArticle);
 
-    const handleResumeChoice = (choice) => {
-        console.log(`選擇 ${choice} 進行學習`);
-        if (choice === 'restart') {
-            const newProgress = ProgressManager.resetProgress(selectedTopic);
-            setTopicProgress(newProgress);
-            setStartRound(1);
-        } else if (choice === 'continue') {
-            const currentRound = topicProgress[selectedTopic] || 0;
-            setStartRound(currentRound + 1);
+		// 測驗功能
+document.addEventListener('DOMContentLoaded', function() {
+    const quizButtons = document.querySelectorAll('.quiz-button');
+    const quizContents = document.querySelectorAll('.quiz-content');
+    
+    // 初始隱藏所有測驗內容
+    quizContents.forEach(content => {
+        content.style.display = 'none';
+    });
+    
+    // 測驗按鈕點擊事件
+    quizButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // 獲取最近的測驗內容元素
+            const quizContent = this.previousElementSibling;
+            // 切換顯示/隱藏
+            if (quizContent.style.display === 'none' || quizContent.style.display === '') {
+                quizContent.style.display = 'block';
+                this.textContent = '關閉測驗';
+            } else {
+                quizContent.style.display = 'none';
+                this.innerHTML = '開始測驗 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>';
+            }
+        });
+    });
+    
+    // 韓國戒嚴測驗答案檢查 - 增強版
+const checkButton = document.getElementById('check-answers');
+if (checkButton) {
+    checkButton.addEventListener('click', function() {
+        const answers = {
+            'q1': 'D',
+            'q2': 'D',
+            'q3': 'C'
+        };
+        
+        // 先移除所有之前的答案標記
+        document.querySelectorAll('.answer-indicator').forEach(el => el.remove());
+        
+        // 檢查每個問題的答案
+        for (let question in answers) {
+            const correctAnswer = answers[question];
+            const options = document.querySelectorAll(`input[name="${question}"]`);
+            const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+            
+            // 如果有選擇答案
+            if (selectedOption) {
+                options.forEach(option => {
+                    const label = option.parentElement;
+                    
+                    // 創建標記元素
+                    const indicator = document.createElement('span');
+                    indicator.className = 'answer-indicator ml-2';
+                    
+                    if (option.value === correctAnswer) {
+                        // 正確答案
+                        indicator.textContent = '✓';
+                        indicator.className += ' text-green-600 font-bold';
+                        
+                        // 如果選擇的不是正確答案，添加"正確答案"文字
+                        if (option !== selectedOption) {
+                            indicator.textContent += ' (正確答案)';
+                        }
+                    }
+                    
+                    if (option === selectedOption && option.value !== correctAnswer) {
+                        // 錯誤答案
+                        indicator.textContent = '✗';
+                        indicator.className += ' text-red-600 font-bold';
+                        label.className += ' line-through text-red-600';
+                    }
+                    
+                    // 只有在有標記內容時才添加標記
+                    if (indicator.textContent) {
+                        label.appendChild(indicator);
+                    }
+                });
+            } else {
+                // 未回答的問題
+                const questionText = document.querySelector(`p:contains("${question.substring(1)}.")`);
+                if (questionText) {
+                    const indicator = document.createElement('span');
+                    indicator.className = 'answer-indicator ml-2 text-amber-500 font-bold';
+                    indicator.textContent = '(未回答)';
+                    questionText.appendChild(indicator);
+                }
+            }
         }
-        setCurrentPage('quiz');
-    };
-
-    return (
-        <div className="min-h-screen bg-zinc-50 flex flex-col">
-            <header className="bg-white border-b border-zinc-100">
-                <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-                    {/* 左側返回按鈕 - 在非首頁且非刷題模式時顯示 */}
-                    <div className="w-24">
-                        {currentPage !== 'home' && currentPage !== 'quiz' && (
-                            <button 
-                                onClick={() => setCurrentPage('home')}
-                                className="flex items-center space-x-2 text-zinc-500 hover:text-zinc-600 transition-colors"
-                            >
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 19l-7-7 7-7" />
-                                </svg>
-                                <span>返回首頁</span>
-                            </button>
-                        )}
-                    </div>
-                    
-                    {/* 中間的 logo */}
-                    <div className="flex justify-center items-center py-2">
-                        <img 
-                            src="https://hackmd.io/_uploads/HkWcT8hcyl.png" 
-                            alt="Logo" 
-                            className="h-16 w-auto object-contain"
-                        />
-                    </div>
-                    
-                    {/* 保持右側對稱的空白區域 */}
-                    <div className="w-24"></div>
-                </div>
-            </header>
+        
+        // 禁用檢查按鈕並更改其文本
+        this.textContent = '已檢查答案';
+        this.disabled = true;
+        this.className += ' opacity-50 cursor-not-allowed';
+        
+        // 添加重置按鈕
+        const resetButton = document.createElement('button');
+        resetButton.textContent = '重新作答';
+        resetButton.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition ml-2';
+        resetButton.addEventListener('click', function() {
+            // 移除所有標記
+            document.querySelectorAll('.answer-indicator').forEach(el => el.remove());
             
-            <main className="flex-grow">
-                {currentPage === 'home' && (
-                    <HomePage onStartQuiz={handleStartQuiz} />
-                )}
-                
-                {currentPage === 'topics' && (
-                    <TopicSelection 
-                        onSelectTopic={handleSelectTopic} 
-                        onBack={() => setCurrentPage('home')} 
-                        topicProgress={topicProgress}
-                    />
-                )}
-                
-                {currentPage === 'resumePrompt' && (
-                    <ResumePrompt 
-                        topic={selectedTopic}
-                        progress={topicProgress[selectedTopic]}
-                        onChoice={handleResumeChoice}
-                        onBack={() => setCurrentPage('topics')}
-                    />
-                )}
-                
-                {currentPage === 'reviewPrompt' && (
-                    <ReviewPrompt 
-                        topic={selectedTopic}
-                        onChoice={handleResumeChoice}
-                        onBack={() => setCurrentPage('topics')}
-                    />
-                )}
-                
-                {currentPage === 'quiz' && (
-                    <Quiz 
-                        key={`${selectedTopic}-${startRound}`}
-                        topic={selectedTopic} 
-                        onFinish={(destination) => setCurrentPage(destination)}
-                        initialRound={startRound}
-                        onUpdateProgress={(round) => {
-                            const newProgress = ProgressManager.setProgress(selectedTopic, round);
-                            setTopicProgress(newProgress);
-                        }}
-                    />
-                )}
-            </main>
+            // 移除文本樣式
+            document.querySelectorAll('label').forEach(label => {
+                label.className = label.className.replace('line-through text-red-600', '');
+            });
             
-            {/* 頁腳組件 */}
-            <Footer />
-        </div>
-    );
+            // 清除所有選擇
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // 重新啟用檢查按鈕
+            checkButton.textContent = '檢查答案';
+            checkButton.disabled = false;
+            checkButton.className = checkButton.className.replace('opacity-50 cursor-not-allowed', '');
+            
+            // 移除重置按鈕
+            this.remove();
+        });
+        
+        // 將重置按鈕添加到檢查按鈕旁邊
+        this.parentElement.appendChild(resetButton);
+    });
 }
-        ReactDOM.render(<App />, document.getElementById('app'));
+
+// 美國大選測驗答案檢查
+const checkButtonUS = document.getElementById('check-answers-us-election');
+if (checkButtonUS) {
+    checkButtonUS.addEventListener('click', function() {
+        const answers = {
+            'q1': 'B',
+            'q2': 'C'
+        };
+        
+        // 先移除所有之前的答案標記
+        document.querySelectorAll('#quiz-us-election .answer-indicator').forEach(el => el.remove());
+        
+        // 檢查每個問題的答案
+        for (let question in answers) {
+            const correctAnswer = answers[question];
+            const options = document.querySelectorAll(`#quiz-us-election input[name="${question}"]`);
+            const selectedOption = document.querySelector(`#quiz-us-election input[name="${question}"]:checked`);
+            
+            // 如果有選擇答案
+            if (selectedOption) {
+                options.forEach(option => {
+                    const label = option.parentElement;
+                    
+                    // 創建標記元素
+                    const indicator = document.createElement('span');
+                    indicator.className = 'answer-indicator ml-2';
+                    
+                    if (option.value === correctAnswer) {
+                        // 正確答案
+                        indicator.textContent = '✓';
+                        indicator.className += ' text-green-600 font-bold';
+                        
+                        // 如果選擇的不是正確答案，添加"正確答案"文字
+                        if (option !== selectedOption) {
+                            indicator.textContent += ' (正確答案)';
+                        }
+                    }
+                    
+                    if (option === selectedOption && option.value !== correctAnswer) {
+                        // 錯誤答案
+                        indicator.textContent = '✗';
+                        indicator.className += ' text-red-600 font-bold';
+                        label.className += ' line-through text-red-600';
+                    }
+                    
+                    // 只有在有標記內容時才添加標記
+                    if (indicator.textContent) {
+                        label.appendChild(indicator);
+                    }
+                });
+            } else {
+                // 未回答的問題
+                const questionText = document.querySelector(`#quiz-us-election p:contains("${question.substring(1)}.")`);
+                if (questionText) {
+                    const indicator = document.createElement('span');
+                    indicator.className = 'answer-indicator ml-2 text-amber-500 font-bold';
+                    indicator.textContent = '(未回答)';
+                    questionText.appendChild(indicator);
+                }
+            }
+        }
+        
+        // 禁用檢查按鈕並更改其文本
+        this.textContent = '已檢查答案';
+        this.disabled = true;
+        this.className += ' opacity-50 cursor-not-allowed';
+        
+        // 添加重置按鈕
+        const resetButton = document.createElement('button');
+        resetButton.textContent = '重新作答';
+        resetButton.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition ml-2';
+        resetButton.addEventListener('click', function() {
+            // 移除所有標記
+            document.querySelectorAll('#quiz-us-election .answer-indicator').forEach(el => el.remove());
+            
+            // 移除文本樣式
+            document.querySelectorAll('#quiz-us-election label').forEach(label => {
+                label.className = label.className.replace('line-through text-red-600', '');
+            });
+            
+            // 清除所有選擇
+            document.querySelectorAll('#quiz-us-election input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // 重新啟用檢查按鈕
+            checkButtonUS.textContent = '檢查答案';
+            checkButtonUS.disabled = false;
+            checkButtonUS.className = checkButtonUS.className.replace('opacity-50 cursor-not-allowed', '');
+            
+            // 移除重置按鈕
+            this.remove();
+        });
+        
+        // 將重置按鈕添加到檢查按鈕旁邊
+        this.parentElement.appendChild(resetButton);
+    });
+}
+
+// 職場霸凌測驗答案檢查
+const checkButtonWorkplace = document.getElementById('check-answers-workplace');
+if (checkButtonWorkplace) {
+    checkButtonWorkplace.addEventListener('click', function() {
+        const answers = {
+            'q1': 'C',
+            'q2': 'D',
+            'q3': 'D',
+            'q4': 'D',
+            'q5': 'B',
+            'q6': 'D'
+        };
+        
+        // 先移除所有之前的答案標記
+        document.querySelectorAll('#quiz-workplace .answer-indicator').forEach(el => el.remove());
+        
+        // 檢查每個問題的答案
+        for (let question in answers) {
+            const correctAnswer = answers[question];
+            const options = document.querySelectorAll(`#quiz-workplace input[name="${question}"]`);
+            const selectedOption = document.querySelector(`#quiz-workplace input[name="${question}"]:checked`);
+            
+            // 如果有選擇答案
+            if (selectedOption) {
+                options.forEach(option => {
+                    const label = option.parentElement;
+                    
+                    // 創建標記元素
+                    const indicator = document.createElement('span');
+                    indicator.className = 'answer-indicator ml-2';
+                    
+                    if (option.value === correctAnswer) {
+                        // 正確答案
+                        indicator.textContent = '✓';
+                        indicator.className += ' text-green-600 font-bold';
+                        
+                        // 如果選擇的不是正確答案，添加"正確答案"文字
+                        if (option !== selectedOption) {
+                            indicator.textContent += ' (正確答案)';
+                        }
+                    }
+                    
+                    if (option === selectedOption && option.value !== correctAnswer) {
+                        // 錯誤答案
+                        indicator.textContent = '✗';
+                        indicator.className += ' text-red-600 font-bold';
+                        label.className += ' line-through text-red-600';
+                    }
+                    
+                    // 只有在有標記內容時才添加標記
+                    if (indicator.textContent) {
+                        label.appendChild(indicator);
+                    }
+                });
+            } else {
+                // 未回答的問題
+                const questionText = document.querySelector(`#quiz-workplace p:contains("${question.substring(1)}.")`);
+                if (questionText) {
+                    const indicator = document.createElement('span');
+                    indicator.className = 'answer-indicator ml-2 text-amber-500 font-bold';
+                    indicator.textContent = '(未回答)';
+                    questionText.appendChild(indicator);
+                }
+            }
+        }
+        
+        // 禁用檢查按鈕並更改其文本
+        this.textContent = '已檢查答案';
+        this.disabled = true;
+        this.className += ' opacity-50 cursor-not-allowed';
+        
+        // 添加重置按鈕
+        const resetButton = document.createElement('button');
+        resetButton.textContent = '重新作答';
+        resetButton.className = 'bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition ml-2';
+        resetButton.addEventListener('click', function() {
+            // 移除所有標記
+            document.querySelectorAll('#quiz-workplace .answer-indicator').forEach(el => el.remove());
+            
+            // 移除文本樣式
+            document.querySelectorAll('#quiz-workplace label').forEach(label => {
+                label.className = label.className.replace('line-through text-red-600', '');
+            });
+            
+            // 清除所有選擇
+            document.querySelectorAll('#quiz-workplace input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // 重新啟用檢查按鈕
+            checkButtonWorkplace.textContent = '檢查答案';
+            checkButtonWorkplace.disabled = false;
+            checkButtonWorkplace.className = checkButtonWorkplace.className.replace('opacity-50 cursor-not-allowed', '');
+            
+            // 移除重置按鈕
+            this.remove();
+        });
+        
+        // 將重置按鈕添加到檢查按鈕旁邊
+        this.parentElement.appendChild(resetButton);
+    });
+}
+
+// 因為 querySelector 不支持 :contains，所以添加此擴展
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+if (!document.querySelector(':contains')) {
+    // 添加自定義選擇器為 :contains
+    document.querySelectorAll = (function(querySelectorAll) {
+        return function(selector) {
+            if (selector.indexOf(':contains') > -1) {
+                const parts = selector.split(':contains');
+                const pre = parts[0];
+                const textContent = parts[1].substring(1, parts[1].length - 1);
+                
+                const elements = querySelectorAll.call(this, pre);
+                const result = [];
+                
+                for (let i = 0; i < elements.length; i++) {
+                    if (elements[i].textContent.indexOf(textContent) > -1) {
+                        result.push(elements[i]);
+                    }
+                }
+                
+                return result;
+            } else {
+                return querySelectorAll.call(this, selector);
+            }
+        };
+    })(document.querySelectorAll);
+}
+});
     </script>
 </body>
 </html>
