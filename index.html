@@ -385,6 +385,50 @@ button:disabled {
 .article-footer {
     margin-top: auto; /* 確保頁尾始終在底部 */
 }
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.podcast-play-btn {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.read-article-btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.floating-player {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: linear-gradient(to right, #3182ce, #63b3ed);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.close-player {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.close-player:hover {
+    opacity: 1;
+}
     </style>
 </head>
 <body class="bg-gradient-to-b from-blue-900 via-blue-600 to-blue-400">
@@ -403,137 +447,9 @@ button:disabled {
         <!-- 主要內容 -->
         <div class="container mx-auto px-4 py-4">
             
-            
-            <!-- Podcast 部分 -->
-<div class="content-section">
-    <h2 class="section-title">本期 Podcast</h2>
-    
-   <!-- Podcast 卡片 1 -->
-   <div class="podcast-card flex p-3 cursor-pointer" data-podcast-id="ep13">
-        <img src="https://hackmd.io/_uploads/HJm_Ffyxel.jpg" alt="Podcast 封面" class="podcast-image rounded-lg mr-3">
-        <div class="flex-grow">
-            <span class="podcast-tag">嗨！公民電台</span>
-            <h3 class="card-title text-base">EP13: 從韓國戒嚴到台灣民主發展之路</h3>
-            <div class="flex items-center justify-between mt-2">
-                <div class="text-sm text-gray-500">00:00</div>
-                <button class="play-btn-icon mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
-                        <path d="M8 5v14l11-7z"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Podcast 播放器 1 -->
-    <div id="player-ep13" class="podcast-player bg-blue-100 p-3 rounded-lg mb-4 hidden">
-        <div class="flex items-center mb-2">
-            <button class="play-button mr-3" data-audio="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Korea's Briefest Martial Law and Aftermath.wav" data-target="ep13">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
-                    <path d="M8 5v14l11-7z"></path>
-                </svg>
-            </button>
-            <div class="flex-grow">
-                <div class="audio-progress-container w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div class="audio-progress-bar bg-blue-600 h-full w-0"></div>
-                </div>
-                <div class="audio-time-display w-full mt-1 text-xs text-gray-600 flex justify-between">
-                    <span class="current-time">0:00</span>
-                    <span class="duration-time">0:00</span>
-                </div>
-            </div>
-        </div>
-        <audio id="audio-ep13" class="hidden">
-            <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Korea's Briefest Martial Law and Aftermath.wav" type="audio/mpeg">
-        </audio>
-    </div>
-    
-    <!-- Podcast 卡片 2 -->
-    <div class="podcast-card flex p-3 cursor-pointer" data-podcast-id="ep14">
-        <img src="https://hackmd.io/_uploads/HJLdYf1gle.jpg" alt="Podcast 封面" class="podcast-image rounded-lg mr-3">
-        <div class="flex-grow">
-            <span class="podcast-tag">嗨！公民電台</span>
-            <h3 class="card-title text-base">EP14: 2024美國大選後的全球政治走向</h3>
-            <div class="flex items-center justify-between mt-2">
-                <div class="text-sm text-gray-500">00:00</div>
-                <button class="play-btn-icon mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
-                        <path d="M8 5v14l11-7z"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Podcast 播放器 2 -->
-    <div id="player-ep14" class="podcast-player bg-blue-100 p-3 rounded-lg mb-4 hidden">
-        <div class="flex items-center mb-2">
-            <button class="play-button mr-3" data-audio="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Trump Returns_ US Election 2024 Analysis.wav" data-target="ep14">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
-                    <path d="M8 5v14l11-7z"></path>
-                </svg>
-            </button>
-            <div class="flex-grow">
-                <div class="audio-progress-container w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div class="audio-progress-bar bg-blue-600 h-full w-0"></div>
-                </div>
-                <div class="audio-time-display w-full mt-1 text-xs text-gray-600 flex justify-between">
-                    <span class="current-time">0:00</span>
-                    <span class="duration-time">0:00</span>
-                </div>
-            </div>
-        </div>
-        <audio id="audio-ep14" class="hidden">
-            <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Trump Returns_ US Election 2024 Analysis.wav" type="audio/mpeg">
-        </audio>
-    </div>
-    
-    <!-- Podcast 卡片 3 -->
-    <div class="podcast-card flex p-3 cursor-pointer" data-podcast-id="ep15">
-        <img src="https://hackmd.io/_uploads/SkcutM1ggx.jpg" alt="Podcast 封面" class="podcast-image rounded-lg mr-3">
-        <div class="flex-grow">
-            <span class="podcast-tag">嗨！公民電台</span>
-            <h3 class="card-title text-base">EP15: 職場霸凌事件與勞工權益保障</h3>
-            <div class="flex items-center justify-between mt-2">
-                <div class="text-sm text-gray-500">00:00</div>
-                <button class="play-btn-icon mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
-                        <path d="M8 5v14l11-7z"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Podcast 播放器 3 -->
-    <div id="player-ep15" class="podcast-player bg-blue-100 p-3 rounded-lg mb-4 hidden">
-        <div class="flex items-center mb-2">
-            <button class="play-button mr-3" data-audio="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Workplace Bullying Tragedy, Legal Framework, and Prevention.wav" data-target="ep15">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" class="text-blue-600">
-                    <path d="M8 5v14l11-7z"></path>
-                </svg>
-            </button>
-            <div class="flex-grow">
-                <div class="audio-progress-container w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                    <div class="audio-progress-bar bg-blue-600 h-full w-0"></div>
-                </div>
-                <div class="audio-time-display w-full mt-1 text-xs text-gray-600 flex justify-between">
-                    <span class="current-time">0:00</span>
-                    <span class="duration-time">0:00</span>
-                </div>
-            </div>
-        </div>
-        <audio id="audio-ep15" class="hidden">
-            <source src="https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Workplace Bullying Tragedy, Legal Framework, and Prevention.wav" type="audio/mpeg">
-        </audio>
-    </div>
-</div>
-</div>
-
-            
             <!-- 文章部分 -->
             <div class="content-section">
-                <h2 class="section-title">本期文章</h2>
+                <h2 class="section-title">本期內容</h2>
                 
                 <!-- 第一篇新聞 -->
 <div class="article-card mb-4 cursor-pointer hover:shadow-lg transition-shadow duration-300" data-article="korea-martial-law">
@@ -543,9 +459,20 @@ button:disabled {
         <h3 class="card-title">韓國史上最短戒嚴 尹錫悅宣布6 小時內解除</h3>
         <p class="card-excerpt">本文將分析韓國近期發生的短暫戒嚴事件，探討其背後的政治與社會因素...</p>
         
-        <div class="flex justify-end">
-            <span class="text-sm text-gray-500">5分鐘閱讀</span>
-        </div>
+        <div class="action-bar">
+    <div class="flex items-center">
+        <span class="text-sm text-gray-500 mr-3">5分鐘閱讀</span>
+        <button class="podcast-play-btn flex items-center text-blue-600 hover:text-blue-800 transition" data-podcast-id="ep13">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" class="mr-1">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+            <span>收聽Podcast</span>
+        </button>
+    </div>
+    <button class="read-article-btn bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition text-sm" onclick="showArticle('korea-martial-law');">
+    閱讀全文
+</button>
+</div>
     </div>
 </div>
                 
@@ -557,13 +484,24 @@ button:disabled {
         <h3 class="card-title">2024 美國大選 川普重返白宮共和黨全面執政</h3>
         <p class="card-excerpt">2024年美國大選結果出爐，川普成功重返白宮，共和黨在國會也取得多數席次...</p>
         
-        <div class="flex justify-end">
-            <span class="text-sm text-gray-500">6分鐘閱讀</span>
-        </div>
+        <div class="action-bar">
+    <div class="flex items-center">
+        <span class="text-sm text-gray-500 mr-3">5分鐘閱讀</span>
+        <button class="podcast-play-btn flex items-center text-blue-600 hover:text-blue-800 transition" data-podcast-id="ep14">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" class="mr-1">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+            <span>收聽Podcast</span>
+        </button>
+    </div>
+    <button class="read-article-btn bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition text-sm" onclick="showArticle('us-election');">
+    閱讀全文
+</button>
+</div>
     </div>
 </div>
                 
-                <!-- 第三篇法律 -->
+                <!-- 第三篇新聞 -->
 <div class="article-card cursor-pointer hover:shadow-lg transition-shadow duration-300" data-article="workplace-bullying">
     <img src="https://hackmd.io/_uploads/SkcutM1ggx.jpg" alt="職場霸凌" class="article-image">
     <div class="p-4">
@@ -571,10 +509,22 @@ button:disabled {
         <h3 class="card-title">職場霸凌悲劇震驚社會 專家呼籲強化法制保障勞工權益</h3>
         <p class="card-excerpt">近期發生的職場霸凌事件引起社會關注，本文分析現行法律保障不足之處...</p>
         
-        <div class="flex justify-end">
-            <span class="text-sm text-gray-500">7分鐘閱讀</span>
-        </div>
+        <div class="action-bar">
+    <div class="flex items-center">
+        <span class="text-sm text-gray-500 mr-3">5分鐘閱讀</span>
+        <button class="podcast-play-btn flex items-center text-blue-600 hover:text-blue-800 transition" data-podcast-id="ep15">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" class="mr-1">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+            <span>收聽Podcast</span>
+        </button>
     </div>
+    <button class="read-article-btn bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition text-sm" onclick="showArticle('workplace-bullying');">
+    閱讀全文
+</button>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -930,33 +880,6 @@ const backToMainButton = document.getElementById('back-to-main');
 const articleCards = document.querySelectorAll('.article-card');
 const articleContainers = document.querySelectorAll('.article-container');
 
-// 點擊文章卡片顯示對應文章
-articleCards.forEach(card => {
-    card.addEventListener('click', function() {
-        const articleId = this.getAttribute('data-article');
-        
-        // 先滾動到頂部，然後再切換頁面
-        window.scrollTo({
-            top: 0,
-            behavior: 'instant' // 使用 'instant' 而不是默認的 'smooth'
-        });
-        
-        // 延遲一下再切換頁面，確保滾動已完成
-        setTimeout(() => {
-            // 隱藏主頁，顯示文章頁
-            mainPage.style.display = 'none';
-            articlePage.style.display = 'block';
-            
-            // 隱藏所有文章容器
-            articleContainers.forEach(container => {
-                container.style.display = 'none';
-            });
-            
-            // 顯示指定的文章
-            document.getElementById(articleId).style.display = 'block';
-        }, 10);
-    });
-});
 
 // 點擊返回按鈕回到主頁
 backToMainButton.addEventListener('click', function() {
@@ -1597,6 +1520,99 @@ if (!document.querySelector(':contains')) {
     })(document.querySelectorAll);
 }
 });
+
+// 最簡單直接的方法解決問題
+document.addEventListener('DOMContentLoaded', function() {
+    
+   
+
+    // Podcast 播放按鈕
+    document.querySelectorAll('.podcast-play-btn').forEach(btn => {
+        btn.onclick = function(e) {
+            e.stopPropagation();
+            
+            const podcastId = this.getAttribute('data-podcast-id');
+            let podcastTitle, podcastImage, audioSrc;
+            
+            if (podcastId === 'ep13') {
+                podcastTitle = "EP13: 從韓國戒嚴到台灣民主發展之路";
+                podcastImage = "https://hackmd.io/_uploads/HJm_Ffyxel.jpg";
+                audioSrc = "https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Korea's Briefest Martial Law and Aftermath.wav";
+            } else if (podcastId === 'ep14') {
+                podcastTitle = "EP14: 2024美國大選後的全球政治走向";
+                podcastImage = "https://hackmd.io/_uploads/HJLdYf1gle.jpg";
+                audioSrc = "https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Trump Returns_ US Election 2024 Analysis.wav";
+            } else if (podcastId === 'ep15') {
+                podcastTitle = "EP15: 職場霸凌事件與勞工權益保障";
+                podcastImage = "https://hackmd.io/_uploads/SkcutM1ggx.jpg";
+                audioSrc = "https://www.ltedu.com.tw/Web/Sharefile/LT/20250430/Workplace Bullying Tragedy, Legal Framework, and Prevention.wav";
+            }
+            
+            // 移除已存在的播放器
+            const existingPlayer = document.querySelector('.floating-player');
+            if (existingPlayer) {
+                existingPlayer.remove();
+            }
+            
+            // 創建浮動播放器
+            const audioPlayer = document.createElement('div');
+            audioPlayer.className = 'floating-player';
+            audioPlayer.innerHTML = `
+                <div class="flex items-center">
+                    <div class="w-12 h-12 min-w-[3rem] rounded-lg shadow-md overflow-hidden mr-3">
+                        <img src="${podcastImage}" alt="Podcast 封面" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="text-white font-bold mb-1 text-sm">${podcastTitle}</div>
+                        <audio controls autoplay class="w-full h-8 custom-audio">
+                            <source src="${audioSrc}" type="audio/mpeg">
+                            您的瀏覽器不支持音頻播放。
+                        </audio>
+                    </div>
+                    <button class="close-player ml-2 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(audioPlayer);
+            
+            // 添加關閉按鈕事件
+            audioPlayer.querySelector('.close-player').addEventListener('click', function() {
+                audioPlayer.remove();
+            });
+            
+            return false; // 防止默認行為
+        };
+    });
+});
+
+function showArticle(articleId) {
+    console.log('顯示文章：', articleId);
+    
+    // 隱藏主頁，顯示文章頁
+    document.getElementById('main-page').style.display = 'none';
+    document.getElementById('article-page').style.display = 'block';
+    
+    // 隱藏所有文章
+    document.querySelectorAll('.article-container').forEach(container => {
+        container.style.display = 'none';
+    });
+    
+    // 顯示指定的文章
+    const targetArticle = document.getElementById(articleId);
+    if (targetArticle) {
+        targetArticle.style.display = 'block';
+    } else {
+        console.error('無法找到文章元素：', articleId);
+    }
+    
+    // 滾動到頁面頂部
+    window.scrollTo(0, 0);
+}
     </script>
 </body>
 </html>
